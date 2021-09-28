@@ -1,12 +1,29 @@
 {
   "name": "checkout-system",
   "version": "0.0.0",
+  "main": "main.js",
+  "build": {
+    "appId": "checkout.system.sams1",
+    "files": [
+      "main.js",
+      "dist"
+    ],
+    "linux": {
+      "target": "AppImage"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "electron": "ng build --base-href ./ && electron .",
+    "electron-build": "ng build --base-href ./",
+    "electron-package": "electron-builder"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +45,9 @@
     "@angular/compiler-cli": "~12.2.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
+    "electron": "^15.0.0",
+    "electron-builder": "^22.11.7",
+    "electron-packager": "^15.4.0",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
