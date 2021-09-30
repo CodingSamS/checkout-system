@@ -7,4 +7,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'checkout-system';
+  checkout: boolean;
+
+  constructor() {
+    this.checkout = true;
+  }
+
+  doCheckout(): void {
+    this.checkout = true;
+  }
+
+  doStatistic(): void {
+    this.checkout = false;
+  }
 }
