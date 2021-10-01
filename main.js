@@ -1,6 +1,7 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
+const fs = require("fs");
 
 let win;
 function createWindow() {
@@ -26,3 +27,26 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+const databasePath = path.join(app.getPath('appData'), 'sams_checkout_system', 'database.json');
+
+ipcMain.on('getDatabase', (event, _) => {
+  fs.readFile(databasePath, 'utf8', (err, data) => {
+    if (err) {
+      // file does not exist, return null (service will handle this case)
+      event.returnValue = null;
+    } else {
+      event.returnValue = data;
+    }
+  })
+});
+
+ipcMain.on('writeDatabase', (event, arg) => {
+  fs.writeFile(databasePath, arg, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("file written successfully")
+    }
+  })
+})

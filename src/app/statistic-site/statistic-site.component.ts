@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseAccessService } from "../database-access.service";
 
 @Component({
   selector: 'app-statistic-site',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticSiteComponent implements OnInit {
 
-  constructor() { }
+  constructor(private databaseAccess: DatabaseAccessService) { }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxElectronModule } from "ngx-electron";
 
 import { AppComponent } from './app.component';
 import { CheckoutSiteComponent } from './checkout-site/checkout-site.component';
@@ -14,7 +15,8 @@ import { SaleItemComponent } from './checkout-site/sale-item/sale-item.component
     SaleItemComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgxElectronModule
   ],
   providers: [],
   bootstrap: [AppComponent]
