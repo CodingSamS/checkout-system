@@ -7,17 +7,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'checkout-system';
-  checkout: boolean;
+  activeSite: string;
 
   constructor() {
-    this.checkout = true;
+    this.activeSite = "EventManagement";
   }
 
   doCheckout(): void {
-    this.checkout = true;
+    this.activeSite = "Checkout";
   }
 
   doStatistic(): void {
-    this.checkout = false;
+    this.activeSite = "Statistic";
+  }
+
+  doEvents(): void {
+    this.activeSite = "EventManagement"
   }
 }

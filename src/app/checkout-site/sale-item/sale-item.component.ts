@@ -1,25 +1,26 @@
 import { Component, OnInit, Input } from '@angular/core';
+import Dict = NodeJS.Dict;
 
 @Component({
   selector: 'app-sale-item',
   templateUrl: './sale-item.component.html',
   styleUrls: ['./sale-item.component.css']
 })
+
 export class SaleItemComponent implements OnInit {
 
   counter: number;
-  name: string;
-  price: number;
-  @Input() data: any[] | undefined;
+  name: string | undefined;
+  price: number | undefined;
+  @Input() data: any | undefined;
 
   constructor() {
     this.counter = 0;
-    console.log(this.data);
-    this.name="1";
-    this.price=1;
   }
 
   ngOnInit(): void {
+    this.name = this.data?.name;
+    this.price = this.data?.price;
   }
 
   increase(): void {
@@ -31,3 +32,4 @@ export class SaleItemComponent implements OnInit {
   }
 
 }
+

@@ -8,11 +8,17 @@ import { DatabaseAccessService } from "../database-access.service";
 })
 export class CheckoutSiteComponent implements OnInit {
 
-  data: any[][];
+  data: Array<{name: string, price: number}>;
 
   constructor(private databaseAccess: DatabaseAccessService) {
-    this.data = [["Käse", 1.50], ["Schinken", 3.20]];
-    console.log(this.data);
+    this.data = [{
+      "name": "Käse",
+      "price": 1.50
+      },
+      {
+        "name": "Schinken",
+        "price": 3.20
+      }];
   }
 
   ngOnInit(): void {

@@ -5,7 +5,14 @@ const fs = require("fs");
 
 let win;
 function createWindow() {
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  });
   // load the dist folder from Angular
   win.loadURL(
     url.format({
@@ -28,7 +35,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-const databasePath = path.join(app.getPath('appData'), 'sams_checkout_system', 'database.json');
+const databasePath = path.join(app.getPath('appData'), 'sams-checkout-system', 'database.json');
 
 ipcMain.on('getDatabase', (event, _) => {
   fs.readFile(databasePath, 'utf8', (err, data) => {
@@ -42,6 +49,9 @@ ipcMain.on('getDatabase', (event, _) => {
 });
 
 ipcMain.on('writeDatabase', (event, arg) => {
+  fs.mkdir(path.dirname(databasePath), err => {
+    console.log(err);
+  });
   fs.writeFile(databasePath, arg, (err) => {
     if (err) {
       console.log(err)
