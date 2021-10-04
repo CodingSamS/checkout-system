@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import Dict = NodeJS.Dict;
 
 @Component({
   selector: 'app-sale-item',

@@ -8,20 +8,16 @@ import { DatabaseAccessService } from "../database-access.service";
 })
 export class CheckoutSiteComponent implements OnInit {
 
-  data: Array<{name: string, price: number}>;
+  data: Array<{name: string, price: number}> | undefined;
+  eventName: string | undefined;
 
   constructor(private databaseAccess: DatabaseAccessService) {
-    this.data = [{
-      "name": "Käse",
-      "price": 1.50
-      },
-      {
-        "name": "Schinken",
-        "price": 3.20
-      }];
   }
 
   ngOnInit(): void {
+    const newestEvent = this.databaseAccess.getNewestEvent()
+    this.data = newestEvent.content.internal.checkoutItems;
+    this.eventName = newestEvent.event;
   }
 
   submit(): void {

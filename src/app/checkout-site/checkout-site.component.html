@@ -1,12 +1,20 @@
-<div class="row">
+<div class="row mt-2">
   <div class="col col-3 p-2 m-2 mx-auto" *ngFor="let item of this.data">
     <app-sale-item
       [data]="item">
     </app-sale-item>
   </div>
 </div>
-<div class="row">
-  <div class="col">
-    <button type="button" class="btn btn-primary" (click)="this.submit()">Eingabe</button>
+<nav class="navbar fixed-bottom navbar-dark bg-info bg-opacity-25">
+  <div class="container-fluid">
+    <div class="col-sm">
+      <span class="navbar-brand">{{ this.eventName }}</span>
+    </div>
+    <div class="col-sm text-center">
+      <button type="button" class="btn btn-secondary" (click)="this.submit()">Eingabe Extern</button>
+    </div>
+    <div class="col-sm text-end">
+      <button type="button" class="btn btn-outline-secondary" (click)="this.submit()">Eingabe Intern</button>
+    </div>
   </div>
-</div>
+</nav>
