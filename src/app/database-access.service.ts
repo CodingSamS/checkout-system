@@ -42,6 +42,21 @@ export class DatabaseAccessService {
             "name": "Kuchen",
             "price": 1.00,
             "counter": 0
+          },
+          "3": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "4": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "5": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
           }
         },
         "external": {
@@ -56,6 +71,21 @@ export class DatabaseAccessService {
             "counter": 0
           },
           "2": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "3": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "4": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "5": {
             "name": "Kuchen",
             "price": 1.00,
             "counter": 0
