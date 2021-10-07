@@ -4,7 +4,7 @@ import { DatabaseAccessService } from "../database-access.service";
 @Component({
   selector: 'app-statistic-site',
   templateUrl: './statistic-site.component.html',
-  styleUrls: ['./statistic-site.component.css']
+  styleUrls: ['./statistic-site.component.scss']
 })
 export class StatisticSiteComponent implements OnInit {
 

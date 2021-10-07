@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-single-plot',
   templateUrl: './single-plot.component.html',
-  styleUrls: ['./single-plot.component.css']
+  styleUrls: ['./single-plot.component.scss']
 })
 export class SinglePlotComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class SinglePlotComponent implements OnInit {
   xAxisLabel: string = '';
   showYAxisLabel: boolean = true;
   yAxisLabel: string = 'Menge';
-  legendTitle: string = '';
+  legendTitle: string = 'Kunde';
 
   colorScheme = {
     domain: ['#5AA454', '#C7B42C', '#AAAAAA']

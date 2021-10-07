@@ -4,7 +4,7 @@ import { DatabaseAccessService } from "../database-access.service";
 @Component({
   selector: 'app-event-management-site',
   templateUrl: './event-management-site.component.html',
-  styleUrls: ['./event-management-site.component.css']
+  styleUrls: ['./event-management-site.component.scss']
 })
 export class EventManagementSiteComponent implements OnInit {
 

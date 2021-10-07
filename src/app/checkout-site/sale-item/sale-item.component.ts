@@ -4,7 +4,7 @@ import { CheckoutItem } from "../../event";
 @Component({
   selector: 'app-sale-item',
   templateUrl: './sale-item.component.html',
-  styleUrls: ['./sale-item.component.css']
+  styleUrls: ['./sale-item.component.scss']
 })
 
 export class SaleItemComponent implements OnInit {

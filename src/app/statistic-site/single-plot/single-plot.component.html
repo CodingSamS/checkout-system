@@ -4,7 +4,7 @@
   </div>
 </div>
 <div class="row mt-2 d-flex justify-content-center" style="height: 300px">
-  <div class="col m-2">
+  <div class="col m-2 dark">
     <ngx-charts-bar-vertical-2d
       [results]="this.data?.plotData"
       [gradient]="gradient"
@@ -18,8 +18,7 @@
       [legendTitle]="legendTitle"
       (select)="onSelect($event)"
       (activate)="onActivate($event)"
-      (deactivate)="onDeactivate($event)"
-      style="fill: #d8cfea">
+      (deactivate)="onDeactivate($event)">
     </ngx-charts-bar-vertical-2d>
   </div>
 </div>

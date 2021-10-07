@@ -5,7 +5,7 @@ import { CheckoutItem, Event } from "../event";
 @Component({
   selector: 'app-checkout-site',
   templateUrl: './checkout-site.component.html',
-  styleUrls: ['./checkout-site.component.css']
+  styleUrls: ['./checkout-site.component.scss']
 })
 export class CheckoutSiteComponent implements OnInit {
 
