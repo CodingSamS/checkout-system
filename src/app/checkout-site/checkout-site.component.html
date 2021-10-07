@@ -1,25 +1,26 @@
-<div class="row mt-2">
+<nav class="navbar fixed-top navbar-dark bg-info bg-opacity-25" style="height: 60px">
+  <div class="container-fluid">
+    <h2 class="mx-auto text-light fw-bold">{{ this.eventName }}</h2>
+  </div>
+</nav>
+
+<div class="row m-4"></div>
+
+<div class="row mt-lg-5 mb-5">
   <div class="col col-3 p-2 m-2 mx-auto" *ngFor="let item of this.getDataArray()">
     <app-sale-item
       [data]="item">
     </app-sale-item>
   </div>
 </div>
-<div class="row mt-5">
-  <div class="col text-light text-end">
-    <h1>Summe: <span class="badge bg-primary">{{ this.getSum() }} €</span></h1>
+<div class="row mt-5 align-items-center">
+  <div class="col-6 text-light text-center">
+    <h1>Summe: <span class="badge bg-warning text-dark">{{ this.getSum() }} €</span></h1>
+  </div>
+  <div class="col-3 text-light text-end">
+    <button type="button" class="btn btn-lg btn-success" (click)="this.submit(false)">Eingabe Extern</button>
+  </div>
+  <div class="col text-light text-start">
+    <button type="button" class="btn btn-lg btn-outline-success" (click)="this.submit(true)">Eingabe Intern</button>
   </div>
 </div>
-<nav class="navbar fixed-bottom navbar-dark bg-info bg-opacity-25">
-  <div class="container-fluid">
-    <div class="col-sm">
-      <span class="navbar-brand">{{ this.eventName }}</span>
-    </div>
-    <div class="col-sm text-center">
-      <button type="button" class="btn btn-secondary" (click)="this.submit(false)">Eingabe Extern</button>
-    </div>
-    <div class="col-sm text-end">
-      <button type="button" class="btn btn-outline-secondary" (click)="this.submit(true)">Eingabe Intern</button>
-    </div>
-  </div>
-</nav>

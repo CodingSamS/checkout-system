@@ -1,10 +1,18 @@
-<nav class="navbar fixed-bottom navbar-dark bg-info bg-opacity-25">
+<nav class="navbar fixed-top navbar-dark bg-info bg-opacity-25" style="height: 60px">
   <div class="container-fluid">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+    <div class="col-3"></div>
 
-      <button type="button" class="btn btn-success">New</button>
+    <div class="col-6">
+      <ngx-select-dropdown
+        (change)="selectionChanged($event)"
+        [multiple]="false"
+        [config]="dropdownConfig"
+        [options]="this.dropdownOptions">
+      </ngx-select-dropdown>
+    </div>
+
+    <div class="col-3 text-end">
+      <button type="button" class="btn btn-success">Neu</button>
+    </div>
   </div>
 </nav>

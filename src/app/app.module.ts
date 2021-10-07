@@ -7,7 +7,8 @@ import { StatisticSiteComponent } from './statistic-site/statistic-site.componen
 import { SaleItemComponent } from './checkout-site/sale-item/sale-item.component';
 import { EventManagementSiteComponent } from './event-management-site/event-management-site.component';
 import { SinglePlotComponent } from './statistic-site/single-plot/single-plot.component';
-import {NgxChartsModule} from "@swimlane/ngx-charts";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 @NgModule({
   declarations: [
@@ -18,10 +19,11 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
     EventManagementSiteComponent,
     SinglePlotComponent,
   ],
-    imports: [
-        BrowserModule,
-        NgxChartsModule
-    ],
+  imports: [
+    BrowserModule,
+    NgxChartsModule,
+    SelectDropDownModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

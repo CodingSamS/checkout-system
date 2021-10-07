@@ -1,5 +1,11 @@
 <div class="container">
-  <div class="row mt-4">
+  <app-checkout-site *ngIf="this.activeSite == 'Checkout'"></app-checkout-site>
+  <app-statistic-site *ngIf="this.activeSite == 'Statistic'"></app-statistic-site>
+  <app-event-management-site *ngIf="this.activeSite == 'EventManagement'"></app-event-management-site>
+
+  <hr />
+
+  <div class="row mb-4 fixed-bottom">
     <div class="col text-center">
       <div class="btn-group btn-group-lg">
         <button type="button" class="btn btn-secondary" (click)="doCheckout()" [disabled]="this.activeSite == 'Checkout'">Kasse</button>
@@ -8,7 +14,4 @@
       </div>
     </div>
   </div>
-  <app-checkout-site *ngIf="this.activeSite == 'Checkout'"></app-checkout-site>
-  <app-statistic-site *ngIf="this.activeSite == 'Statistic'"></app-statistic-site>
-  <app-event-management-site *ngIf="this.activeSite == 'EventManagement'"></app-event-management-site>
 </div>

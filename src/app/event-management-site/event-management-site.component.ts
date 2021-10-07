@@ -9,11 +9,20 @@ import { DatabaseAccessService } from "../database-access.service";
 export class EventManagementSiteComponent implements OnInit {
 
   currentEvent: string;
-  eventList: Array<string>;
+  dropdownOptions: Array<{id: number, description: string}>;
+  dropdownOptionsID: number;
+  dropdownConfig: {};
 
   constructor(private databaseAccess: DatabaseAccessService) {
     this.currentEvent = "No Event Selected";
-    this.eventList = [];
+    this.dropdownOptions = [];
+    this.dropdownOptionsID = 0;
+    this.dropdownConfig = {
+      search: true,
+      limitTo: 10,
+      searchOnKey: 'description',
+      placeholder: 'Wähle eine Veranstaltung aus'
+    }
   }
 
   ngOnInit(): void {
@@ -23,10 +32,18 @@ export class EventManagementSiteComponent implements OnInit {
       this.currentEvent = currentE.event;
     }
     for (let i = 0; i < database.length; i++) {
-      this.eventList.push(database[i].event);
+      this.dropdownOptions.push({
+        "id": this.dropdownOptionsID,
+        "description": database[i].event
+      });
+      this.dropdownOptionsID += 1;
     }
 
     // to do: ngx-select-dropdown: single select dropdown
+  }
+
+  selectionChanged(data: any): void {
+    console.log(data);
   }
 
 }

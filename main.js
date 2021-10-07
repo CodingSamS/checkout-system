@@ -6,8 +6,8 @@ const fs = require("fs");
 let win;
 function createWindow() {
   win = new BrowserWindow({
-    width: 1200,
-    height: 700,
+    width: 1400,
+    height: 900,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
