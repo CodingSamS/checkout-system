@@ -37,6 +37,7 @@
     "@angular/router": "~12.2.0",
     "@electron/remote": "^2.0.1",
     "@forevolve/bootstrap-dark": "^1.2.0-g6c89781692",
+    "@swimlane/ngx-charts": "^19.0.1",
     "bootstrap": "^5.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

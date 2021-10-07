@@ -1,8 +1,13 @@
 <div class="row mt-2">
-  <div class="col col-3 p-2 m-2 mx-auto" *ngFor="let item of this.data">
+  <div class="col col-3 p-2 m-2 mx-auto" *ngFor="let item of this.getDataArray()">
     <app-sale-item
       [data]="item">
     </app-sale-item>
+  </div>
+</div>
+<div class="row mt-2">
+  <div class="col text-center text-light">
+    <h1>Summe: <span class="badge bg-primary">{{ this.getSum() }} €</span></h1>
   </div>
 </div>
 <nav class="navbar fixed-bottom navbar-dark bg-info bg-opacity-25">
@@ -11,10 +16,10 @@
       <span class="navbar-brand">{{ this.eventName }}</span>
     </div>
     <div class="col-sm text-center">
-      <button type="button" class="btn btn-secondary" (click)="this.submit()">Eingabe Extern</button>
+      <button type="button" class="btn btn-secondary" (click)="this.submit(false)">Eingabe Extern</button>
     </div>
     <div class="col-sm text-end">
-      <button type="button" class="btn btn-outline-secondary" (click)="this.submit()">Eingabe Intern</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="this.submit(true)">Eingabe Intern</button>
     </div>
   </div>
 </nav>

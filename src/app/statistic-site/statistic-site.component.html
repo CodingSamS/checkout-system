@@ -1,1 +1,3 @@
-<p>statistic-site works!</p>
+<div *ngFor="let dataItem of this.data">
+  <app-single-plot [data]="dataItem"></app-single-plot>
+</div>

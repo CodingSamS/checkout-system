@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CheckoutItem } from "../../event";
 
 @Component({
   selector: 'app-sale-item',
@@ -8,26 +9,24 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class SaleItemComponent implements OnInit {
 
-  counter: number;
-  name: string | undefined;
-  price: number | undefined;
-  @Input() data: any | undefined;
+  @Input() data: CheckoutItem | undefined;
 
   constructor() {
-    this.counter = 0;
   }
 
   ngOnInit(): void {
-    this.name = this.data?.name;
-    this.price = this.data?.price;
   }
 
   increase(): void {
-    this.counter += 1;
+    if (this.data != undefined) {
+      this.data.counter += 1;
+    }
   }
 
   decrease(): void {
-    this.counter -= 1;
+    if (this.data != undefined) {
+      this.data.counter -= 1;
+    }
   }
 
 }
