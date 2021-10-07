@@ -13,6 +13,8 @@ export class CheckoutSiteComponent implements OnInit {
   data: Record<string, CheckoutItem>;
   dataKeyset: Array<string>;
 
+  // to do: change col-x based on the number of items (make it so, that 3 lines are used if possible - but at least 2 items per line)
+
   constructor(private databaseAccess: DatabaseAccessService) {
     this.data = {};
     this.dataKeyset = [];

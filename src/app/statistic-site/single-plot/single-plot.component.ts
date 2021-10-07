@@ -20,10 +20,6 @@ export class SinglePlotComponent implements OnInit {
   yAxisLabel: string = 'Menge';
   legendTitle: string = 'Kunde';
 
-  colorScheme = {
-    domain: ['#5AA454', '#C7B42C', '#AAAAAA']
-  };
-
   constructor() {
   }
 

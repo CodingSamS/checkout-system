@@ -3,11 +3,15 @@ const path = require("path");
 const url = require("url");
 const fs = require("fs");
 
+
+
 let win;
 function createWindow() {
+
   win = new BrowserWindow({
     width: 1400,
-    height: 900,
+    height: 1000,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -27,6 +31,7 @@ function createWindow() {
     win = null;
   });
 }
+
 app.on("ready", createWindow);
 // on macOS, closing the window doesn't quit the app
 app.on("window-all-closed", () => {

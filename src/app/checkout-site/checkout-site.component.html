@@ -6,14 +6,17 @@
 
 <div class="row m-4"></div>
 
-<div class="row mt-lg-5 mb-5">
+<div class="row mt-5">
   <div class="col col-3 p-2 m-2 mx-auto" *ngFor="let item of this.getDataArray()">
     <app-sale-item
       [data]="item">
     </app-sale-item>
   </div>
 </div>
-<div class="row mt-5 align-items-center">
+
+<hr class="bg-light mt-3"/>
+
+<div class="row mt-3 align-items-center">
   <div class="col-6 text-light text-center">
     <h1>Summe: <span class="badge bg-warning text-dark">{{ this.getSum() }} €</span></h1>
   </div>
