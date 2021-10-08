@@ -8,29 +8,27 @@ import { DatabaseAccessService } from "../database-access.service";
 })
 export class EventManagementSiteComponent implements OnInit {
 
-  currentEvent: string;
   dropdownOptions: Array<{id: number, description: string}>;
   dropdownOptionsID: number;
   dropdownConfig: {};
+  selectedEvent: any;
+  modelData: any;
 
   constructor(private databaseAccess: DatabaseAccessService) {
-    this.currentEvent = "No Event Selected";
     this.dropdownOptions = [];
     this.dropdownOptionsID = 0;
     this.dropdownConfig = {
       search: true,
-      limitTo: 10,
+      limitTo: 8,
       searchOnKey: 'description',
-      placeholder: 'Wähle eine Veranstaltung aus'
+      placeholder: 'Wähle eine Veranstaltung aus',
+      searchPlaceholder: 'Suche',
+      noResultsFound: 'Keine Veranstaltung gefunden!'
     }
   }
 
   ngOnInit(): void {
     const database = this.databaseAccess.getSortedDatabase(false);
-    const currentE = this.databaseAccess.getCurrentEvent()
-    if (currentE != undefined) {
-      this.currentEvent = currentE.event;
-    }
     for (let i = 0; i < database.length; i++) {
       this.dropdownOptions.push({
         "id": this.dropdownOptionsID,
@@ -38,12 +36,14 @@ export class EventManagementSiteComponent implements OnInit {
       });
       this.dropdownOptionsID += 1;
     }
-
-    // to do: ngx-select-dropdown: single select dropdown
   }
 
   selectionChanged(data: any): void {
-    console.log(data);
+    this.selectedEvent = data.value.description;
   }
 
+  newEvent(): void {
+    this.modelData = undefined
+    this.selectedEvent = null;
+  }
 }

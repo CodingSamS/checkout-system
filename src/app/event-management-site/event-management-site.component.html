@@ -4,15 +4,28 @@
 
     <div class="col-6">
       <ngx-select-dropdown
+        [(ngModel)]="this.modelData"
         (change)="selectionChanged($event)"
         [multiple]="false"
         [config]="dropdownConfig"
-        [options]="this.dropdownOptions">
+        [options]="this.dropdownOptions"
+      >
       </ngx-select-dropdown>
     </div>
 
     <div class="col-3 text-end">
-      <button type="button" class="btn btn-success">Neu</button>
+      <button type="button" class="btn btn-success" (click)="this.newEvent()">Neu</button>
     </div>
   </div>
 </nav>
+
+<div class="row m-4"></div>
+
+<div class="row mt-5">
+  <div class="col">
+    <app-event-config-table>
+
+    </app-event-config-table>
+  </div>
+</div>
+

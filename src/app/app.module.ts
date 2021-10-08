@@ -8,7 +8,11 @@ import { SaleItemComponent } from './checkout-site/sale-item/sale-item.component
 import { EventManagementSiteComponent } from './event-management-site/event-management-site.component';
 import { SinglePlotComponent } from './statistic-site/single-plot/single-plot.component';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
-import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { EventConfigTableComponent } from './event-management-site/event-config-table/event-config-table.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastComponent } from './toasts/toast/toast.component'
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,11 +22,15 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
     SaleItemComponent,
     EventManagementSiteComponent,
     SinglePlotComponent,
+    EventConfigTableComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
     NgxChartsModule,
-    SelectDropDownModule
+    SelectDropDownModule,
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

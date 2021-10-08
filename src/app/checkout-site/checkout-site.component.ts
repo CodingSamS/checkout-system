@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
 import { CheckoutItem, Event } from "../event";
+import { ToastService } from "../toasts/toast.service";
 
 @Component({
   selector: 'app-checkout-site',
@@ -15,7 +16,7 @@ export class CheckoutSiteComponent implements OnInit {
 
   // to do: change col-x based on the number of items (make it so, that 3 lines are used if possible - but at least 2 items per line)
 
-  constructor(private databaseAccess: DatabaseAccessService) {
+  constructor(private databaseAccess: DatabaseAccessService, private toastService: ToastService) {
     this.data = {};
     this.dataKeyset = [];
     this.eventName = "No Event Selected";
@@ -50,6 +51,7 @@ export class CheckoutSiteComponent implements OnInit {
 
   submit(internal: boolean): void {
     this.databaseAccess.writeDatabase(this.data, this.eventName, internal);
+    this.toastService.showSuccess( "Eingabe erfolgreich");
     this.ngOnInit();
   }
 
