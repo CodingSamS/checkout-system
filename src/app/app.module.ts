@@ -12,7 +12,8 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { EventConfigTableComponent } from './event-management-site/event-config-table/event-config-table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastComponent } from './toasts/toast/toast.component'
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import {FormsModule} from "@angular/forms";
     NgxChartsModule,
     SelectDropDownModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    MDBBootstrapModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

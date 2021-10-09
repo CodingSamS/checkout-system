@@ -1,8 +1,8 @@
+<app-checkout-site *ngIf="this.activeSite == 'Checkout'"></app-checkout-site>
+<app-statistic-site *ngIf="this.activeSite == 'Statistic'"></app-statistic-site>
+<app-event-management-site *ngIf="this.activeSite == 'EventManagement'"></app-event-management-site>
 <div class="container">
-  <app-checkout-site *ngIf="this.activeSite == 'Checkout'"></app-checkout-site>
-  <app-statistic-site *ngIf="this.activeSite == 'Statistic'"></app-statistic-site>
-  <app-event-management-site *ngIf="this.activeSite == 'EventManagement'"></app-event-management-site>
-
+  <div class="row m-5"></div>
   <div class="row mb-4 fixed-bottom">
     <div class="col text-center">
       <div class="btn-group btn-group-lg">

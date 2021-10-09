@@ -8,7 +8,7 @@ import { DatabaseAccessService } from "../database-access.service";
 })
 export class StatisticSiteComponent implements OnInit {
 
-  data: Array<{ eventName: string, plotData: Array<{name: string, series: Array<{name: string, value: number}>}> }>;
+  data: Array<{ eventName: string, revenue: number, plotData: Array<{name: string, series: Array<{name: string, value: number}>}> }>;
 
   constructor(private databaseAccess: DatabaseAccessService) {
     this.data = [];
@@ -18,6 +18,7 @@ export class StatisticSiteComponent implements OnInit {
     const database = this.databaseAccess.getSortedDatabase(false);
     for (let i = 0; i < database.length; i++) {
       let plotData = [];
+      let revenue = 0;
       for (const key in Object.keys(database[i].content.internal)) {
         let series = [];
         series.push({
@@ -36,9 +37,11 @@ export class StatisticSiteComponent implements OnInit {
           "name": database[i].content.internal[key].name,
           "series": series
         })
+        revenue += database[i].content.external[key].counter * database[i].content.external[key].price
       }
       this.data.push({
         "eventName": database[i].event,
+        "revenue": revenue,
         "plotData": plotData
       })
     }

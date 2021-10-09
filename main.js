@@ -45,8 +45,11 @@ const databasePath = path.join(app.getPath('appData'), 'sams-checkout-system', '
 ipcMain.on('getDatabase', (event, _) => {
   fs.readFile(databasePath, 'utf8', (err, data) => {
     if (err) {
-      // file does not exist, return null (service will handle this case)
-      event.returnValue = null;
+      // file does not exist, create path and return an empty database
+      fs.mkdir(path.dirname(databasePath), err => {
+        console.log(err);
+      });
+      event.returnValue = JSON.stringify([]);
     } else {
       event.returnValue = data;
     }
@@ -54,9 +57,6 @@ ipcMain.on('getDatabase', (event, _) => {
 });
 
 ipcMain.on('writeDatabase', (event, arg) => {
-  fs.mkdir(path.dirname(databasePath), err => {
-    console.log(err);
-  });
   fs.writeFile(databasePath, arg, (err) => {
     if (err) {
       console.log(err)

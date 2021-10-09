@@ -49,6 +49,19 @@ export class CheckoutSiteComponent implements OnInit {
     return sum;
   }
 
+  getColSize(): string {
+    const numberOfItems = this.dataKeyset.length;
+    if (numberOfItems <= 9) {
+      return "col-4"
+    } else {
+      if (numberOfItems <= 12) {
+        return "col-3"
+      } else {
+        return "col-2"
+      }
+    }
+  }
+
   submit(internal: boolean): void {
     this.databaseAccess.writeDatabase(this.data, this.eventName, internal);
     this.toastService.showSuccess( "Eingabe erfolgreich");

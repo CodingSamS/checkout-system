@@ -13,6 +13,13 @@ export class ToastService {
     });
   }
 
+  showDanger(text: string) {
+    this.toasts.push({
+      text: text,
+      className: 'badge bg-danger'
+    });
+  }
+
   remove(toast: any) {
     this.toasts = this.toasts.filter(t => t != toast);
   }

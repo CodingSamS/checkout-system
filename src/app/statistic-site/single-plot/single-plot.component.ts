@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SinglePlotComponent implements OnInit {
 
-  @Input() data: { eventName: string, plotData: Array<{name: string, series: Array<{name: string, value: number}>}> } | undefined;
+  @Input() data: { eventName: string, revenue: number, plotData: Array<{name: string, series: Array<{name: string, value: number}>}> } | undefined;
 
   // options
   showXAxis: boolean = true;

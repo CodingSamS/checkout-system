@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-dark bg-info bg-opacity-25" style="height: 60px">
+<nav class="navbar navbar-dark bg-info bg-opacity-25" style="height: 60px">
   <div class="container-fluid">
     <div class="col-3"></div>
 
@@ -8,8 +8,7 @@
         (change)="selectionChanged($event)"
         [multiple]="false"
         [config]="dropdownConfig"
-        [options]="this.dropdownOptions"
-      >
+        [options]="this.dropdownOptions">
       </ngx-select-dropdown>
     </div>
 
@@ -19,13 +18,15 @@
   </div>
 </nav>
 
-<div class="row m-4"></div>
+<div class="container">
 
-<div class="row mt-5">
-  <div class="col">
-    <app-event-config-table>
+  <div class="row mt-2">
+    <div class="col">
+      <app-event-config-table>
 
-    </app-event-config-table>
+      </app-event-config-table>
+    </div>
   </div>
+
 </div>
 

@@ -13,11 +13,7 @@ export class DatabaseAccessService {
   constructor(private electronService: ElectronService) {
     if(this.electronService.isElectron) {
       const data = this.electronService.ipcRenderer?.sendSync('getDatabase');
-      if (data == null) {
-        this.database = [];
-      } else {
-        this.database = JSON.parse(data);
-      }
+      this.database = JSON.parse(data);
     } else {
       this.database = []
       throw new Error("No Electron support present");
@@ -72,6 +68,31 @@ export class DatabaseAccessService {
             "name": "Kuchen",
             "price": 1.00,
             "counter": 0
+          },
+          "9": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "10": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "11": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "12": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "13": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
           }
         },
         "external": {
@@ -116,6 +137,31 @@ export class DatabaseAccessService {
             "counter": 0
           },
           "8": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "9": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "10": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "11": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "12": {
+            "name": "Kuchen",
+            "price": 1.00,
+            "counter": 0
+          },
+          "13": {
             "name": "Kuchen",
             "price": 1.00,
             "counter": 0
