@@ -1,73 +1,120 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges } from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
-import { CheckoutItem } from "../../event";
-import {FormBuilder, FormGroup, FormControl, FormArray, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormArray, Validators} from "@angular/forms";
+import {DatabaseAccessService} from "../../database-access.service";
+import {CheckoutItem, Event} from "../../event";
 
 @Component({
   selector: 'app-event-config-table',
   templateUrl: './event-config-table.component.html',
   styleUrls: ['./event-config-table.component.scss']
 })
-export class EventConfigTableComponent implements OnInit {
+export class EventConfigTableComponent implements OnChanges {
 
-  itemForm: FormGroup;
+  eventForm: FormGroup;
+  @Input() selectedEvent: any;
 
-  constructor(private toastService: ToastService, private fb: FormBuilder) {
-    this.itemForm = fb.group({
-      title: ['', [Validators.required]],
-      items: fb.array([
-        fb.group({
-          name: ['', [Validators.required]],
-          price: [0, [Validators.required]],
-          counter: [0, [Validators.required]],
-        })
-      ])
+  // to do:
+  // validator: check if the Event already exists -> or: feedback when saving the event, or: asking if overwriting the event
+  // delete button with confirmation dialog
+
+  constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
+    this.eventForm = this.fb.group({
+      title: ['Name der Veranstaltung', [Validators.required]],
+      items: this.fb.array([])
     });
   }
 
-  ngOnInit(): void {
-  }
-}
-/*
-  itemList: Array<CheckoutItem>;
-  editField: string | undefined;
-  valid: boolean;
-
-  constructor(private toastService: ToastService) {
-    this.itemList = [];
-    this.valid = false;
-  }
-
-
-  add() {
-    this.itemList.push({
-      "name": "Bitte Namen eingeben",
-      "price": 0,
-      "counter": 0
-    })
-  }
-
-  changeValue(id: number, property: string, event: any) {
-    this.editField = event.target.textContent;
-  }
-
-  updateList(id: number, property: string, event: any) {
-    if (property == "name") {
-      this.itemList[id].name = event.target.textContent;
-    } if (property == "price") {
-      this.itemList[id].price = Number(event.target.textContent);
-    } if (property == "counter") {
-      this.itemList[id].counter = Number(event.target.textContent);
+  ngOnChanges(): void {
+    if (this.selectedEvent) {
+      this.eventForm = this.fb.group({
+        title: [this.selectedEvent, [Validators.required]],
+        items: this.fb.array([])
+      });
+      let e = this.databaseAccess.getEventByName(this.selectedEvent);
+      if(e) {
+        let keySet = Object.keys(e.content.items)
+        for(let i in keySet) {
+          const itemForm = this.fb.group({
+            name: [e.content.items[i].name, [Validators.required]],
+            price: [e.content.items[i].price, [Validators.required]],
+            counterInternal: [e.content.items[i].counterInternal, [Validators.required]],
+            counterExternal: [e.content.items[i].counterExternal, [Validators.required]],
+          })
+          this.items.push(itemForm);
+        }
+      }
+    } else {
+      this.eventForm = this.fb.group({
+        title: ['Name der Veranstaltung', [Validators.required]],
+        items: this.fb.array([])
+      });
     }
   }
 
-  remove(id: any) {
-    this.itemList.splice(id, 1);
+  get items() {
+    return this.eventForm.controls["items"] as FormArray;
+  }
+
+  deleteItem(lessonIndex: number) {
+    this.items.removeAt(lessonIndex);
+  }
+
+  addItem() {
+    const itemForm = this.fb.group({
+      name: ['', [Validators.required]],
+      price: [0, [Validators.required]],
+      counterInternal: [0, [Validators.required]],
+      counterExternal: [0, [Validators.required]]
+    })
+    this.items.push(itemForm);
+  }
+
+  setCurrentEvent(): void {
+    if (this.selectedEvent) {
+      let success = this.databaseAccess.setCurrentEvent(this.selectedEvent);
+      if (success) {
+        this.toastService.showSuccess("Setzen der Veranstaltung erfolgreich");
+      } else {
+        this.toastService.showDanger("Setzen der Veranstaltung fehlgeschlagen")
+      }
+    } else {
+      this.toastService.showDanger("Setzen der Veranstaltung fehlgeschlagen")
+    }
+
   }
 
   saveConfigTable(): void {
-    this.toastService.showDanger("hallo welt")
-    this.toastService.showSuccess("Speichern erfolgreich");
-  }
-*/
+    if (this.eventForm.valid) {
 
+      let items: Record<string, CheckoutItem> = {}
+
+      for (let i = 0; i < this.items.controls.length; i++) {
+        let fg = this.items.controls[i] as FormGroup;
+        items[JSON.stringify(i)] = {
+          name: fg.controls.name.value,
+          price: fg.controls.price.value,
+          counterInternal: fg.controls.counterInternal.value,
+          counterExternal: fg.controls.counterExternal.value
+        }
+      }
+
+      let event: Event = {
+        event: this.eventForm.controls.title.value,
+        content: {
+          lastUpdated: new Date(),
+          items: items
+        }
+      }
+
+      this.databaseAccess.setEvent(event);
+
+      this.selectedEvent = event.event;
+
+      this.toastService.showSuccess("Speichern erfolgreich");
+    } else {
+      this.toastService.showDanger("Die Eingabe enthält Fehler")
+    }
+  }
+
+}

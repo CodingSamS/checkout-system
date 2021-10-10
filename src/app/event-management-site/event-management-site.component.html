@@ -22,8 +22,9 @@
 
   <div class="row mt-2">
     <div class="col">
-      <app-event-config-table>
-
+      <app-event-config-table
+        *ngIf="this.selectedEvent !== undefined"
+        [selectedEvent]="this.selectedEvent">
       </app-event-config-table>
     </div>
   </div>

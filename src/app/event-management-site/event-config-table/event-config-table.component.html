@@ -1,54 +1,89 @@
-<div class="row">
-  <div class="col" [formGroup]="this.itemForm">
-    <!-- Editable table -->
-    <div class="card text-light bg-secondary bg-opacity-25">
-      <div class="card-header text-center font-weight-bold">
-        <input type="text"
-               placeholder="Name der Veranstaltung"
-               formControlName="title">
-      </div>
-      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3>
-      <div class="card-body">
-        <div id="table" class="table-editable">
-          <table class="table table-bordered table-striped text-center text-light">
-            <tr>
-              <th class="text-center col-6">Name</th>
-              <th class="text-center col-2">Preis (€)</th>
-              <th class="text-center col-2">Anzahl verkauft</th>
-              <th class="text-center col-2">Löschen</th>
-            </tr>
-            <tr *ngFor="let item of this.itemList; let id = index">
-              <td>
-                <span (keyup)="changeValue(id, 'name', $event)" (blur)="updateList(id, 'name', $event)" contenteditable="true">{{item.name}}</span>
-              </td>
-              <td>
-                <span (keyup)="changeValue(id, 'price', $event)" (blur)="updateList(id, 'price', $event)" contenteditable="true">{{item.price}}</span>
-              </td>
-              <td>
-                <span (keyup)="changeValue(id, 'counter', $event)" (blur)="updateList(id, 'counter', $event)" contenteditable="true">{{item.counter}}</span>
-              </td>
-              <td>
-                <span class="table-remove">
-                  <button class="btn btn-danger btn-sm m-1" (click)="remove(id)">Eintrag entfernen</button>
-                </span>
-              </td>
-            </tr>
-          </table>
+<div class="container">
+  <div class="row text-center">
+    <div class="col col-10 mx-auto" [formGroup]="this.eventForm">
+      <div class="card text-light bg-secondary bg-opacity-25">
+        <div class="card-header modal-dialog-centered">
+          <div class="col-6 mx-auto">
+            <input type="text"
+                   class="form-control form-control-lg bg-secondary text-center"
+                   [class.is-invalid]="this.eventForm.controls.title.valid == false"
+                   [class.is-valid]="this.eventForm.controls.title.valid"
+                   formControlName="title">
+          </div>
         </div>
-        <button class="btn btn-secondary" (click)="add()">Zeile hinzufügen</button>
+        <div class="card-body">
+          <div id="table" class="table-editable">
+            <table class="table table-bordered table-striped text-center text-light">
+              <tr>
+                <th class="text-center col-4">Name</th>
+                <th class="text-center col-2">Preis (€)</th>
+                <th class="text-center col-2">Anzahl verkauft (extern)</th>
+                <th class="text-center col-2">Anzahl verkauft (intern)</th>
+                <th class="text-center col-2">Löschen</th>
+              </tr>
+              <ng-container formArrayName="items">
+                <ng-container *ngFor="let item of this.items.controls; let i = index">
+                  <tr [formGroupName]="i">
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control bg-secondary"
+                        [class.is-invalid]="items.controls[i].get('name')?.valid == false"
+                        [class.is-valid]="items.controls[i].get('name')?.valid"
+                        formControlName="name">
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control bg-secondary"
+                        [class.is-invalid]="items.controls[i].get('price')?.valid == false"
+                        [class.is-valid]="items.controls[i].get('price')?.valid"
+                        formControlName="price">
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control bg-secondary"
+                        [class.is-invalid]="items.controls[i].get('counterExternal')?.valid == false"
+                        [class.is-valid]="items.controls[i].get('counterExternal')?.valid"
+                        formControlName="counterExternal">
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control bg-secondary"
+                        [class.is-invalid]="items.controls[i].get('counterInternal')?.valid == false"
+                        [class.is-valid]="items.controls[i].get('counterInternal')?.valid"
+                        formControlName="counterInternal">
+                    </td>
+                    <td>
+                    <span class="table-remove">
+                      <button class="btn btn-danger btn-sm m-1" (click)="deleteItem(i)">Eintrag entfernen</button>
+                    </span>
+                    </td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </table>
+            <button class="btn btn-secondary" (click)="addItem()">Zeile hinzufügen</button>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- Editable table -->
   </div>
-</div>
 
-<hr class="bg-light mt-3"/>
+  <hr class="bg-light mt-3"/>
 
-<div class="row mt-3">
-  <div class="col-9"></div>
-  <div class="col-3 text-center">
-    <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()">Speichern</button>
+  <div class="row mt-3">
+    <div class="col text-center">
+      <button type="button" class="btn btn-lg btn-info" (click)="this.setCurrentEvent()">Setze Veranstaltung</button>
+    </div>
+    <div class="col text-center">
+      <button type="button" class="btn btn-lg btn-danger" (click)="this.setCurrentEvent()">Lösche Veranstaltung</button>
+    </div>
+    <div class="col text-center">
+      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()">Speichern</button>
+    </div>
   </div>
-</div>
 
-<app-toast aria-live="polite" aria-atomic="true" ></app-toast>
+</div>

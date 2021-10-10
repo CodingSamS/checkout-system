@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CheckoutItem } from "../../event";
+import { SimpleCheckoutItem } from "../../event";
 
 @Component({
   selector: 'app-sale-item',
@@ -9,7 +9,7 @@ import { CheckoutItem } from "../../event";
 
 export class SaleItemComponent implements OnInit {
 
-  @Input() data: CheckoutItem | undefined;
+  @Input() data: SimpleCheckoutItem | undefined;
 
   constructor() {
   }
