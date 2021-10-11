@@ -5,9 +5,9 @@
   <div class="card-body mx-auto">
     <h5>{{ this.data?.price }} €</h5>
     <div class="btn-group btn-group-lg pt-2">
-      <button type="button" class="btn btn-outline-primary" (click)="increase()">+</button>
-      <button type="button" class="btn btn-primary" disabled> {{ this.data?.counter }} </button>
       <button type="button" class="btn btn-outline-primary" (click)="decrease()">-</button>
+      <button type="button" class="btn btn-primary" disabled> {{ this.data?.counter }} </button>
+      <button type="button" class="btn btn-outline-primary" (click)="increase()">+</button>
     </div>
   </div>
 </div>

@@ -1,10 +1,11 @@
-<div class="row mt-2">
-  <div class="col mt-2 text-center">
+<div class="container">
+<div class="row mt-4">
+  <div class="col text-center">
     <h2><span class="badge bg-info bg-opacity-25 text-light">{{ this.data?.eventName }} - Umsatz: {{ this.data?.revenue }} €</span></h2>
   </div>
 </div>
-<div class="row mt-2 d-flex justify-content-center" style="height: 300px">
-  <div class="col m-2 dark">
+<div class="row m-4 d-flex justify-content-center" style="height: 350px">
+  <div class="col dark">
     <ngx-charts-bar-vertical-2d
       [results]="this.data?.plotData"
       [gradient]="gradient"
@@ -21,4 +22,5 @@
       (deactivate)="onDeactivate($event)">
     </ngx-charts-bar-vertical-2d>
   </div>
+</div>
 </div>

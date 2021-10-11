@@ -114,7 +114,14 @@ export class DatabaseAccessService {
     this.currentEvent = this.getNewestEvent();
   }
 
-  writeDatabase(data: Record<number, SimpleCheckoutItem>, eventName: string, internal: boolean): void {
+  writeDatabase(): void {
+    // Overwrite the database file
+    if(this.electronService.isElectron) {
+      this.electronService.ipcRenderer?.send('writeDatabase', JSON.stringify(this.database));
+    }
+  }
+
+  updateCounter(data: Record<number, SimpleCheckoutItem>, eventName: string, internal: boolean): void {
     // Check if the Event is present in database + get the index
     let index = undefined;
     for (let i = 0; i < this.database.length; i++) {
@@ -126,21 +133,18 @@ export class DatabaseAccessService {
     if (index == undefined) {
       return;
     }
-    // Overwrite the data attributes
-    if(this.electronService.isElectron) {
-      for (const key in Object.keys(data)) {
-        if (internal) {
-          this.database[index].content.items[key].counterInternal += data[key].counter;
-        } else {
-          this.database[index].content.items[key].counterExternal += data[key].counter;
-        }
+    for (const key in Object.keys(data)) {
+      if (internal) {
+        this.database[index].content.items[key].counterInternal += data[key].counter;
+      } else {
+        this.database[index].content.items[key].counterExternal += data[key].counter;
       }
-      this.database[index].content.lastUpdated = new Date();
-      this.electronService.ipcRenderer?.send('writeDatabase', JSON.stringify(this.database));
     }
+    this.database[index].content.lastUpdated = new Date();
+    this.writeDatabase();
   }
 
-  setEvent(event: Event): void {
+  overwriteEvent(event: Event): void {
     let index = -1;
     for (let i = 0; i < this.database.length; i++) {
       if (this.database[i].event == event.event) {
@@ -155,6 +159,7 @@ export class DatabaseAccessService {
       }
     }
     this.database.push(event);
+    this.writeDatabase();
   }
 
   setCurrentEvent(eventName: string): boolean {

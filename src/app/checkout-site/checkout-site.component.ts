@@ -61,7 +61,7 @@ export class CheckoutSiteComponent implements OnInit {
   }
 
   submit(internal: boolean): void {
-    this.databaseAccess.writeDatabase(this.data, this.eventName, internal);
+    this.databaseAccess.updateCounter(this.data, this.eventName, internal);
     this.toastService.showSuccess( "Eingabe erfolgreich");
     this.ngOnInit();
   }

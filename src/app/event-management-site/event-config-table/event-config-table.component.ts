@@ -107,7 +107,7 @@ export class EventConfigTableComponent implements OnChanges {
         }
       }
 
-      this.databaseAccess.setEvent(event);
+      this.databaseAccess.overwriteEvent(event);
 
       this.selectedEvent = event.event;
 

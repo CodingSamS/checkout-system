@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastComponent } from './toasts/toast/toast.component'
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     NgbModule,
     FormsModule,
     MDBBootstrapModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

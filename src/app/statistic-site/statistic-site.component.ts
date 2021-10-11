@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
 
 @Component({
@@ -16,9 +16,9 @@ export class StatisticSiteComponent implements OnInit {
 
   ngOnInit(): void {
     const database = this.databaseAccess.getSortedDatabase(false);
-    console.log(database)
     for (let i = 0; i < database.length; i++) {
-      let plotData = [];
+      let plotData: any[];
+      plotData = [];
       let revenue = 0;
       for (const key in Object.keys(database[i].content.items)) {
         let series = [];
