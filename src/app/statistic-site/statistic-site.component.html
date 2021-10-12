@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport itemSize="400" style="height: calc(100vh - 100px);">
+<cdk-virtual-scroll-viewport itemSize="400" class="scrollbar-style">
   <div *cdkVirtualFor="let dataItem of this.data">
     <app-single-plot [data]="dataItem"></app-single-plot>
   </div>
