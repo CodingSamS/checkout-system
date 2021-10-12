@@ -16,7 +16,11 @@ export class EventConfigTableComponent implements OnChanges {
 
   // to do:
   // validator: check if the Event already exists -> or: feedback when saving the event, or: asking if overwriting the event
-  // delete button with confirmation dialog
+  // delete button with confirmation dialog "bootstrap modal"
+  // double click button for the row delete
+  // do not allow overwrites of other events
+  // reset parent component if the event gets deleted (using output)
+  // Change the "Speichern" button to "Anlegen" if the title is changed
 
   constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
     this.eventForm = this.fb.group({
