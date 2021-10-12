@@ -21,6 +21,7 @@ export class EventConfigTableComponent implements OnChanges {
   // do not allow overwrites of other events
   // reset parent component if the event gets deleted (using output)
   // Change the "Speichern" button to "Anlegen" if the title is changed
+  // deactivate unusable buttons based on state
 
   constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
     this.eventForm = this.fb.group({
