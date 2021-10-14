@@ -1,6 +1,14 @@
 import {Component, Input, OnChanges } from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
-import {FormBuilder, FormGroup, FormArray, Validators} from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors
+} from "@angular/forms";
 import {DatabaseAccessService} from "../../database-access.service";
 import {CheckoutItem, EventStandalone} from "../../event";
 
@@ -14,19 +22,33 @@ export class EventConfigTableComponent implements OnChanges {
   eventForm: FormGroup;
   deleteRowState: Array<boolean>;
   @Input() selectedEvent: any;
+  createUniqueTitleValidator: () => ValidatorFn;
 
   // to do:
-  // validator: check if the Event already exists -> do not allow overwrites of other events
   // delete button with confirmation dialog "bootstrap modal"
   // reset parent component if the event gets deleted (using output)
   // delete: be careful when changing the title to an existing one and deleting than -> shouldn't happen if i use the seletedEvent for deletions
+  // after creating new event, it is not possible to create a second new element without switching dialogs
 
   constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
+    this.deleteRowState = [];
+    this.createUniqueTitleValidator = () => {
+      return (control: AbstractControl) : ValidationErrors | null => {
+        const value = control.value;
+
+        if(!value) {
+          return null;
+        }
+
+        const titleNotValid = (value != this.selectedEvent) && (this.databaseAccess.database[value] != undefined);
+
+        return titleNotValid ? {titleNotValid:true}: null;
+      }
+    }
     this.eventForm = this.fb.group({
-      title: ['Name der Veranstaltung', [Validators.required]],
+      title: ['Name der Veranstaltung', [Validators.required, this.createUniqueTitleValidator()]],
       items: this.fb.array([])
     });
-    this.deleteRowState = [];
   }
 
   ngOnChanges(): void {
@@ -50,7 +72,7 @@ export class EventConfigTableComponent implements OnChanges {
       }
     } else {
       this.eventForm = this.fb.group({
-        title: ['Name der Veranstaltung', [Validators.required]],
+        title: ['Name der Veranstaltung', [Validators.required, this.createUniqueTitleValidator()]],
         items: this.fb.array([])
       });
     }

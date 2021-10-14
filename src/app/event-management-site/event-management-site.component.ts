@@ -16,6 +16,9 @@ export class EventManagementSiteComponent implements OnInit {
 
   // to do: does the select framework respect the order of the list of options?
   // to do: the select framework does not update after a new event is added - only after changing tabs
+  // to do: the new event function does not create a new event if the currently displayed event was already created with the new button
+  //        --> two way data binding of selectedEvent
+  //        --> save notifier additionally: if the selectedEvent changes because of new event, also add it to the dropdown list
 
   constructor(private databaseAccess: DatabaseAccessService) {
     this.dropdownOptions = [];
@@ -45,7 +48,7 @@ export class EventManagementSiteComponent implements OnInit {
   }
 
   newEvent(): void {
-    this.modelData = undefined
+    this.modelData = undefined;
     this.selectedEvent = null;
   }
 }
