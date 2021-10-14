@@ -15,33 +15,32 @@ export class StatisticSiteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const database = this.databaseAccess.getSortedDatabase(false);
-    for (let i = 0; i < database.length; i++) {
+    for (let eventKey of this.databaseAccess.getSortedKeyList(false)) {
       let plotData: any[];
       plotData = [];
       let revenue = 0;
-      for (const key in Object.keys(database[i].content.items)) {
+      for (const item of this.databaseAccess.database[eventKey].items) {
         let series = [];
         series.push({
           "name": "Extern",
-          "value": database[i].content.items[key].counterExternal
+          "value": item.counterExternal
         });
         series.push({
           "name": "Intern",
-          "value": database[i].content.items[key].counterInternal
+          "value": item.counterInternal
         });
         series.push({
           "name": "Summe",
-          "value": database[i].content.items[key].counterInternal + database[i].content.items[key].counterExternal
+          "value": item.counterInternal + item.counterExternal
         });
         plotData.push({
-          "name": database[i].content.items[key].name,
+          "name": item.name,
           "series": series
         })
-        revenue += database[i].content.items[key].counterExternal * database[i].content.items[key].price
+        revenue += item.counterExternal * item.price
       }
       this.data.push({
-        "eventName": database[i].event,
+        "eventName": eventKey,
         "revenue": revenue,
         "plotData": plotData
       })

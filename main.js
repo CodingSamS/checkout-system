@@ -40,24 +40,40 @@ app.on("window-all-closed", () => {
   }
 });
 
-const databasePath = path.join(app.getPath('appData'), 'sams-checkout-system', 'database.json');
+const basePath = path.join(app.getPath('appData'), 'sams-checkout-system');
 
 ipcMain.on('getDatabase', (event, _) => {
-  fs.readFile(databasePath, 'utf8', (err, data) => {
+  let database = {};
+  fs.readdir(basePath, (err, files) => {
     if (err) {
       // file does not exist, create path and return an empty database
-      fs.mkdir(path.dirname(databasePath), err => {
+      fs.mkdir(basePath, err => {
         console.log(err);
       });
-      event.returnValue = JSON.stringify([]);
     } else {
-      event.returnValue = data;
+      for (let i = 0; i < files.length; i++) {
+        // check if the file is a valid database file
+        if (files[i].endsWith(".json")) {
+          // add the event to the database
+          let filePath = path.join(basePath, files[i]);
+          fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+              console.log(err);
+            } else {
+              let eventName = files[i].slice(0, -5);
+              database[eventName] = data;
+            }
+          })
+        }
+      }
     }
   })
+  event.returnValue = JSON.stringify(database);
 });
 
-ipcMain.on('writeDatabase', (event, arg) => {
-  fs.writeFile(databasePath, arg, (err) => {
+ipcMain.on('writeEvent', (event, arg) => {
+  let filePath = path.join(basePath, arg["eventName"].concat(".json"));
+  fs.writeFile(filePath, arg["eventData"], (err) => {
     if (err) {
       console.log(err)
     } else {

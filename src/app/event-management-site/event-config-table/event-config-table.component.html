@@ -5,7 +5,7 @@
         <div class="card-header modal-dialog-centered">
           <div class="col-6 mx-auto">
             <input type="text"
-                   class="form-control form-control-lg bg-secondary text-center"
+                   class="form-control form-control-lg bg-secondary text-center fw-bold"
                    [class.is-invalid]="this.eventForm.controls.title.valid == false"
                    [class.is-valid]="this.eventForm.controls.title.valid"
                    formControlName="title">
@@ -27,7 +27,7 @@
                     <td>
                       <input
                         type="text"
-                        class="form-control bg-secondary"
+                        class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('name')?.valid == false"
                         [class.is-valid]="items.controls[i].get('name')?.valid"
                         formControlName="name">
@@ -35,7 +35,7 @@
                     <td>
                       <input
                         type="number"
-                        class="form-control bg-secondary"
+                        class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('price')?.valid == false"
                         [class.is-valid]="items.controls[i].get('price')?.valid"
                         formControlName="price">
@@ -43,7 +43,7 @@
                     <td>
                       <input
                         type="number"
-                        class="form-control bg-secondary"
+                        class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('counterExternal')?.valid == false"
                         [class.is-valid]="items.controls[i].get('counterExternal')?.valid"
                         formControlName="counterExternal">
@@ -51,14 +51,15 @@
                     <td>
                       <input
                         type="number"
-                        class="form-control bg-secondary"
+                        class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('counterInternal')?.valid == false"
                         [class.is-valid]="items.controls[i].get('counterInternal')?.valid"
                         formControlName="counterInternal">
                     </td>
                     <td>
                     <span class="table-remove">
-                      <button class="btn btn-danger btn-sm m-1" (click)="deleteItem(i)">Eintrag entfernen</button>
+                      <button class="btn btn-warning btn-sm m-1" (click)="changeDeleteRowState(i)" *ngIf="!this.deleteRowState[i]">Eintrag entfernen</button>
+                      <button class="btn btn-danger btn-sm m-1" (click)="deleteItem(i)" *ngIf="this.deleteRowState[i]">Eintrag entfernen</button>
                     </span>
                     </td>
                   </tr>
@@ -76,13 +77,14 @@
 
   <div class="row mt-3">
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-info" (click)="this.setCurrentEvent()">Setzen</button>
+      <button type="button" class="btn btn-lg btn-info" (click)="this.setCurrentEvent()" [disabled]="!this.selectedEvent">Setzen</button>
     </div>
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-danger" (click)="this.setCurrentEvent()">Löschen</button>
+      <button type="button" class="btn btn-lg btn-danger" (click)="this.setCurrentEvent()" [disabled]="!this.selectedEvent">Löschen</button>
     </div>
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()">Speichern</button>
+      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()" [disabled]="!this.eventForm.valid" *ngIf="this.isSaveButtonActive">Speichern</button>
+      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()" [disabled]="!this.eventForm.valid" *ngIf="!this.isSaveButtonActive">Anlegen</button>
     </div>
   </div>
 

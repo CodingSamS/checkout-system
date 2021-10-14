@@ -12,9 +12,16 @@ export interface CheckoutItem {
 }
 
 export interface Event {
-  event: string;
-  content: {
-    lastUpdated: Date,
-    items: Record<string, CheckoutItem>
-  }
+  lastUpdated: Date,
+  items: Array<CheckoutItem>
+}
+
+export interface EventStandalone {
+  eventName: string,
+  items: Array<CheckoutItem>
+}
+
+export interface EventStandaloneSimple {
+  eventName: string,
+  items: Array<SimpleCheckoutItem>
 }

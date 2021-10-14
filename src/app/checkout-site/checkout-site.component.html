@@ -1,13 +1,13 @@
 <nav class="navbar navbar-dark bg-info bg-opacity-25" style="height: 60px">
   <div class="container-fluid">
-    <h2 class="mx-auto text-light fw-bold">{{ this.eventName }}</h2>
+    <h2 class="mx-auto text-light fw-bold">{{ this.eventData.eventName }}</h2>
   </div>
 </nav>
 
 <div class="container">
 
   <div class="row mt-2">
-    <div [ngClass]="['col', this.getColSize(), 'p-2', 'm-2', 'mx-auto']" *ngFor="let item of this.getDataArray()">
+    <div [ngClass]="['col', this.getColSize(), 'p-2', 'm-2', 'mx-auto']" *ngFor="let item of this.eventData.items">
       <app-sale-item
         [data]="item">
       </app-sale-item>

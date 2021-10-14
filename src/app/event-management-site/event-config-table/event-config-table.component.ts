@@ -2,7 +2,7 @@ import {Component, Input, OnChanges } from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
 import {FormBuilder, FormGroup, FormArray, Validators} from "@angular/forms";
 import {DatabaseAccessService} from "../../database-access.service";
-import {CheckoutItem, Event} from "../../event";
+import {CheckoutItem, EventStandalone} from "../../event";
 
 @Component({
   selector: 'app-event-config-table',
@@ -12,22 +12,21 @@ import {CheckoutItem, Event} from "../../event";
 export class EventConfigTableComponent implements OnChanges {
 
   eventForm: FormGroup;
+  deleteRowState: Array<boolean>;
   @Input() selectedEvent: any;
 
   // to do:
-  // validator: check if the Event already exists -> or: feedback when saving the event, or: asking if overwriting the event
+  // validator: check if the Event already exists -> do not allow overwrites of other events
   // delete button with confirmation dialog "bootstrap modal"
-  // double click button for the row delete
-  // do not allow overwrites of other events
   // reset parent component if the event gets deleted (using output)
-  // Change the "Speichern" button to "Anlegen" if the title is changed
-  // deactivate unusable buttons based on state
+  // delete: be careful when changing the title to an existing one and deleting than -> shouldn't happen if i use the seletedEvent for deletions
 
   constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
     this.eventForm = this.fb.group({
       title: ['Name der Veranstaltung', [Validators.required]],
       items: this.fb.array([])
     });
+    this.deleteRowState = [];
   }
 
   ngOnChanges(): void {
@@ -36,17 +35,17 @@ export class EventConfigTableComponent implements OnChanges {
         title: [this.selectedEvent, [Validators.required]],
         items: this.fb.array([])
       });
-      let e = this.databaseAccess.getEventByName(this.selectedEvent);
-      if(e) {
-        let keySet = Object.keys(e.content.items)
-        for(let i in keySet) {
+      let items = this.databaseAccess.getEventItems(this.selectedEvent);
+      if(items) {
+        for(const item of items) {
           const itemForm = this.fb.group({
-            name: [e.content.items[i].name, [Validators.required]],
-            price: [e.content.items[i].price, [Validators.required]],
-            counterInternal: [e.content.items[i].counterInternal, [Validators.required]],
-            counterExternal: [e.content.items[i].counterExternal, [Validators.required]],
+            name: [item.name, [Validators.required]],
+            price: [item.price, [Validators.required]],
+            counterInternal: [item.counterInternal, [Validators.required]],
+            counterExternal: [item.counterExternal, [Validators.required]],
           })
           this.items.push(itemForm);
+          this.deleteRowState.push(false);
         }
       }
     } else {
@@ -57,12 +56,24 @@ export class EventConfigTableComponent implements OnChanges {
     }
   }
 
+  get isSaveButtonActive(): boolean {
+    return this.selectedEvent && this.selectedEvent == this.eventForm.controls["title"].value;
+  }
+
   get items() {
     return this.eventForm.controls["items"] as FormArray;
   }
 
-  deleteItem(lessonIndex: number) {
-    this.items.removeAt(lessonIndex);
+  changeDeleteRowState(itemIndex: number) {
+    this.deleteRowState[itemIndex] = true;
+    setTimeout(() => {
+      this.deleteRowState[itemIndex] = false;
+    }, 5000)
+  }
+
+  deleteItem(itemIndex: number) {
+    this.items.removeAt(itemIndex);
+    this.deleteRowState.splice(itemIndex, 1);
   }
 
   addItem() {
@@ -92,29 +103,26 @@ export class EventConfigTableComponent implements OnChanges {
   saveConfigTable(): void {
     if (this.eventForm.valid) {
 
-      let items: Record<string, CheckoutItem> = {}
+      let items: Array<CheckoutItem> = []
 
       for (let i = 0; i < this.items.controls.length; i++) {
         let fg = this.items.controls[i] as FormGroup;
-        items[JSON.stringify(i)] = {
+        items.push({
           name: fg.controls.name.value,
           price: fg.controls.price.value,
           counterInternal: fg.controls.counterInternal.value,
           counterExternal: fg.controls.counterExternal.value
-        }
+        })
       }
 
-      let event: Event = {
-        event: this.eventForm.controls.title.value,
-        content: {
-          lastUpdated: new Date(),
-          items: items
-        }
+      let event: EventStandalone = {
+        eventName: this.eventForm.controls.title.value,
+        items: items
       }
 
       this.databaseAccess.overwriteEvent(event);
 
-      this.selectedEvent = event.event;
+      this.selectedEvent = event.eventName;
 
       this.toastService.showSuccess("Speichern erfolgreich");
     } else {

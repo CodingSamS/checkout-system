@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
-import { Event, SimpleCheckoutItem} from "../event";
+import {EventStandalone, EventStandaloneSimple} from "../event";
 import { ToastService } from "../toasts/toast.service";
 
 @Component({
@@ -10,45 +10,39 @@ import { ToastService } from "../toasts/toast.service";
 })
 export class CheckoutSiteComponent implements OnInit {
 
-  eventName: string;
-  data: Record<string, SimpleCheckoutItem>;
-  dataKeyset: Array<string>;
+  eventData: EventStandaloneSimple;
 
   constructor(private databaseAccess: DatabaseAccessService, private toastService: ToastService) {
-    this.data = {};
-    this.dataKeyset = [];
-    this.eventName = "No Event Selected";
-  }
-
-  ngOnInit(): void {
-    const newestEvent: Event | undefined = this.databaseAccess.getCurrentEvent();
-    if (newestEvent != undefined) {
-      this.dataKeyset = Object.keys(newestEvent.content.items);
-      for (const key in this.dataKeyset) {
-        this.data[key] = {
-          "name": newestEvent.content.items[key].name,
-          "price": newestEvent.content.items[key].price,
-          "counter": 0
-        };
-      }
-      this.eventName = newestEvent.event;
+    this.eventData = {
+      eventName: "No Event selected",
+      items: []
     }
   }
 
-  getDataArray(): Array<SimpleCheckoutItem> {
-    return Object.values(this.data);
+  ngOnInit(): void {
+    const newestEvent: EventStandalone | undefined = this.databaseAccess.getCurrentEvent();
+    if (newestEvent != undefined) {
+      for (const item of newestEvent.items) {
+        this.eventData.items.push({
+          "name": item.name,
+          "price": item.price,
+          "counter": 0
+        });
+      }
+      this.eventData.eventName = newestEvent.eventName;
+    }
   }
 
   getSum(): number {
     let sum = 0;
-    for (const key in this.dataKeyset){
-      sum += this.data[key].counter * this.data[key].price;
+    for (const item of this.eventData.items) {
+      sum += item.counter * item.price;
     }
     return sum;
   }
 
   getColSize(): string {
-    const numberOfItems = this.dataKeyset.length;
+    const numberOfItems = this.eventData.items.length;
     if (numberOfItems <= 9) {
       return "col-4"
     } else {
@@ -60,10 +54,16 @@ export class CheckoutSiteComponent implements OnInit {
     }
   }
 
+  reset(): void {
+    for (const items of this.eventData.items) {
+      items.counter = 0
+    }
+  }
+
   submit(internal: boolean): void {
-    this.databaseAccess.updateCounter(this.data, this.eventName, internal);
+    this.databaseAccess.updateCounter(this.eventData, internal);
     this.toastService.showSuccess( "Eingabe erfolgreich");
-    this.ngOnInit();
+    this.reset();
   }
 
 }

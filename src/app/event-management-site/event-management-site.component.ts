@@ -14,6 +14,9 @@ export class EventManagementSiteComponent implements OnInit {
   selectedEvent: any;
   modelData: any;
 
+  // to do: does the select framework respect the order of the list of options?
+  // to do: the select framework does not update after a new event is added - only after changing tabs
+
   constructor(private databaseAccess: DatabaseAccessService) {
     this.dropdownOptions = [];
     this.dropdownOptionsID = 0;
@@ -28,11 +31,10 @@ export class EventManagementSiteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const database = this.databaseAccess.getSortedDatabase(false);
-    for (let i = 0; i < database.length; i++) {
+    for (const eventKey of this.databaseAccess.getSortedKeyList(false)) {
       this.dropdownOptions.push({
         "id": this.dropdownOptionsID,
-        "description": database[i].event
+        "description": eventKey
       });
       this.dropdownOptionsID += 1;
     }
