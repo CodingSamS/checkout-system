@@ -8,7 +8,8 @@
         (change)="selectionChanged($event)"
         [multiple]="false"
         [config]="dropdownConfig"
-        [options]="this.dropdownOptions">
+        [options]="this.dropdownOptions"
+      >
       </ngx-select-dropdown>
     </div>
 
@@ -24,7 +25,9 @@
     <div class="col">
       <app-event-config-table
         *ngIf="this.selectedEvent !== undefined"
-        [selectedEvent]="this.selectedEvent">
+        [selectedEvent]="this.selectedEvent"
+        (newEventCreated)="this.addNewEvent($event)"
+      >
       </app-event-config-table>
     </div>
   </div>

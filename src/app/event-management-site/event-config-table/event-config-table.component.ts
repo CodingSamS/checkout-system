@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
 import {
   FormBuilder,
@@ -22,15 +22,16 @@ export class EventConfigTableComponent implements OnChanges {
   eventForm: FormGroup;
   deleteRowState: Array<boolean>;
   @Input() selectedEvent: any;
+  @Output() newEventCreated: EventEmitter<String>;
   createUniqueTitleValidator: () => ValidatorFn;
 
   // to do:
   // delete button with confirmation dialog "bootstrap modal"
   // reset parent component if the event gets deleted (using output)
   // delete: be careful when changing the title to an existing one and deleting than -> shouldn't happen if i use the seletedEvent for deletions
-  // after creating new event, it is not possible to create a second new element without switching dialogs
 
   constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
+    this.newEventCreated = new EventEmitter<String>();
     this.deleteRowState = [];
     this.createUniqueTitleValidator = () => {
       return (control: AbstractControl) : ValidationErrors | null => {
@@ -144,7 +145,10 @@ export class EventConfigTableComponent implements OnChanges {
 
       this.databaseAccess.overwriteEvent(event);
 
-      this.selectedEvent = event.eventName;
+      if (this.selectedEvent != event.eventName) {
+        this.selectedEvent = event.eventName;
+        this.newEventCreated.emit(event.eventName);
+      }
 
       this.toastService.showSuccess("Speichern erfolgreich");
     } else {
