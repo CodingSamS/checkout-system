@@ -61,7 +61,7 @@ export class EventManagementSiteComponent implements OnInit {
     if (0 <= index) {
       this.dropdownOptions.splice(index, 1);
     }
-    this.dropdownOptions = [...this.dropdownOptions]; // for updating the dropdown menu
+    this.dropdownOptions = [...this.dropdownOptions]; // for updating the dropdown menu4
     this.selectedEvent = undefined;
   }
 
