@@ -13,12 +13,10 @@ export class DatabaseAccessService {
   constructor(private electronService: ElectronService) {
     if(this.electronService.isElectron) {
       this.database = JSON.parse(this.electronService.ipcRenderer?.sendSync('getDatabase'));
-      console.log("electron present")
     } else {
       this.database = {}
       throw new Error("No Electron support present");
     }
-    console.log(this.database)
     this.currentEventName = this.getNewestEventName();
   }
 
