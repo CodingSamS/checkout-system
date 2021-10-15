@@ -26,11 +26,6 @@ export class EventConfigTableComponent implements OnChanges {
   @Output() currentEventDeleted: EventEmitter<null>;
   createUniqueTitleValidator: () => ValidatorFn;
 
-  // to do:
-  // delete button with confirmation dialog "bootstrap modal"
-  // reset parent component if the event gets deleted (using output)
-  // delete: be careful when changing the title to an existing one and deleting than -> shouldn't happen if i use the seletedEvent for deletions
-
   constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
     this.newEventCreated = new EventEmitter<String>();
     this.currentEventDeleted = new EventEmitter<null>();
@@ -43,7 +38,7 @@ export class EventConfigTableComponent implements OnChanges {
           return null;
         }
 
-        const titleNotValid = (value != this.selectedEvent) && (this.databaseAccess.database[value] != undefined);
+        const titleNotValid = (value != this.selectedEvent) && this.databaseAccess.database.hasOwnProperty(value);
 
         return titleNotValid ? {titleNotValid:true}: null;
       }
@@ -57,7 +52,7 @@ export class EventConfigTableComponent implements OnChanges {
   ngOnChanges(): void {
     if (this.selectedEvent) {
       this.eventForm = this.fb.group({
-        title: [this.selectedEvent, [Validators.required]],
+        title: [this.selectedEvent, [Validators.required, this.createUniqueTitleValidator()]],
         items: this.fb.array([])
       });
       let items = this.databaseAccess.getEventItems(this.selectedEvent);
@@ -79,6 +74,10 @@ export class EventConfigTableComponent implements OnChanges {
         items: this.fb.array([])
       });
     }
+  }
+
+  get isSetButtonActive(): boolean {
+    return this.selectedEvent && this.selectedEvent != this.databaseAccess.currentEventName;
   }
 
   get isSaveButtonActive(): boolean {
