@@ -12,104 +12,13 @@ export class DatabaseAccessService {
 
   constructor(private electronService: ElectronService) {
     if(this.electronService.isElectron) {
-      const data = this.electronService.ipcRenderer?.sendSync('getDatabase');
-      this.database = JSON.parse(data);
+      this.database = JSON.parse(this.electronService.ipcRenderer?.sendSync('getDatabase'));
+      console.log("electron present")
     } else {
       this.database = {}
       throw new Error("No Electron support present");
     }
-    // for testing purposes
-    this.database = {
-      "Liga 2021" : {
-        "lastUpdated": new Date("2021-10-10T22:41:14.211Z"),
-        "items": [
-          {
-            "name": "Käsestange",
-            "price": 3.50,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Schinkenstange",
-            "price": 4.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          },
-          {
-            "name": "Kuchen",
-            "price": 1.00,
-            "counterInternal": 0,
-            "counterExternal": 0
-          }
-        ]
-      }
-    }
+    console.log(this.database)
     this.currentEventName = this.getNewestEventName();
   }
 
@@ -120,6 +29,15 @@ export class DatabaseAccessService {
         eventName: eventName,
         eventData: JSON.stringify(this.database[eventName])
       });
+    }
+  }
+
+  deleteEvent(eventName: string): void {
+    // delete in active database
+    delete this.database[eventName];
+    // trigger file delete on electron layer
+    if(this.electronService.isElectron) {
+      this.electronService.ipcRenderer?.send('deleteEvent', eventName);
     }
   }
 

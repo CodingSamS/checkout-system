@@ -80,7 +80,7 @@
       <button type="button" class="btn btn-lg btn-info" (click)="this.setCurrentEvent()" [disabled]="!this.selectedEvent">Setzen</button>
     </div>
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-danger" (click)="this.setCurrentEvent()" [disabled]="!this.selectedEvent">Löschen</button>
+      <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" [disabled]="!this.selectedEvent">Löschen</button>
     </div>
     <div class="col text-center">
       <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()" [disabled]="!this.eventForm.valid" *ngIf="this.isSaveButtonActive">Speichern</button>
@@ -88,4 +88,33 @@
     </div>
   </div>
 
+</div>
+
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header text-center text-light">
+        <h4 class="modal-title w-100" id="deleteModalLabel">Lösche Veranstaltung: <b>{{this.selectedEvent}}</b></h4>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+          Abbrechen
+        </button>
+        <button type="button"
+                class="btn btn-lg btn-danger"
+                data-bs-dismiss="modal"
+                (click)="this.deleteEvent()">
+          Löschen
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -27,6 +27,7 @@
         *ngIf="this.selectedEvent !== undefined"
         [selectedEvent]="this.selectedEvent"
         (newEventCreated)="this.addNewEvent($event)"
+        (currentEventDeleted)="this.currentEventDeleted()"
       >
       </app-event-config-table>
     </div>

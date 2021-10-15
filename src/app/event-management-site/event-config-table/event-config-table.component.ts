@@ -23,6 +23,7 @@ export class EventConfigTableComponent implements OnChanges {
   deleteRowState: Array<boolean>;
   @Input() selectedEvent: any;
   @Output() newEventCreated: EventEmitter<String>;
+  @Output() currentEventDeleted: EventEmitter<null>;
   createUniqueTitleValidator: () => ValidatorFn;
 
   // to do:
@@ -32,6 +33,7 @@ export class EventConfigTableComponent implements OnChanges {
 
   constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
     this.newEventCreated = new EventEmitter<String>();
+    this.currentEventDeleted = new EventEmitter<null>();
     this.deleteRowState = [];
     this.createUniqueTitleValidator = () => {
       return (control: AbstractControl) : ValidationErrors | null => {
@@ -154,6 +156,11 @@ export class EventConfigTableComponent implements OnChanges {
     } else {
       this.toastService.showDanger("Die Eingabe enthält Fehler")
     }
+  }
+
+  deleteEvent(): void {
+    this.databaseAccess.deleteEvent(this.selectedEvent);
+    this.currentEventDeleted.emit();
   }
 
 }

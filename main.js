@@ -44,30 +44,23 @@ const basePath = path.join(app.getPath('appData'), 'sams-checkout-system');
 
 ipcMain.on('getDatabase', (event, _) => {
   let database = {};
-  fs.readdir(basePath, (err, files) => {
-    if (err) {
-      // file does not exist, create path and return an empty database
-      fs.mkdir(basePath, err => {
-        console.log(err);
-      });
-    } else {
-      for (let i = 0; i < files.length; i++) {
-        // check if the file is a valid database file
-        if (files[i].endsWith(".json")) {
-          // add the event to the database
-          let filePath = path.join(basePath, files[i]);
-          fs.readFile(filePath, 'utf8', (err, data) => {
-            if (err) {
-              console.log(err);
-            } else {
-              let eventName = files[i].slice(0, -5);
-              database[eventName] = data;
-            }
-          })
-        }
+  if (fs.existsSync(basePath)) {
+    const files = fs.readdirSync(basePath);
+    for (const file of files) {
+      // check if the file is a valid database file
+      if (file.endsWith(".json")) {
+        const filePath = path.join(basePath, file);
+        const fileContent = fs.readFileSync(filePath);
+        const eventName = file.slice(0, -5);
+        database[eventName] = JSON.parse(fileContent.toString());
       }
     }
-  })
+  } else {
+    // path to database does not exists (and also no database files) -> create the directory and leave the empty database untouched
+    fs.mkdir(basePath, err => {
+      console.log(err);
+    });
+  }
   event.returnValue = JSON.stringify(database);
 });
 
@@ -80,4 +73,19 @@ ipcMain.on('writeEvent', (event, arg) => {
       console.log("file written successfully")
     }
   })
+})
+
+ipcMain.on('deleteEvent', (event, arg) => {
+  let filePath = path.join(basePath, arg.concat(".json"));
+  if (fs.existsSync(filePath)) {
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("File deleted successfully");
+      }
+    })
+  } else {
+    console.log("This file does not exist, cannot delete");
+  }
 })
