@@ -80,7 +80,7 @@
       <button type="button" class="btn btn-lg btn-info" (click)="this.setCurrentEvent()" [disabled]="!this.isSetButtonActive">Setzen</button>
     </div>
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" [disabled]="!this.selectedEvent">Löschen</button>
+      <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" [disabled]="!this.isDeleteButtonActive">Löschen</button>
     </div>
     <div class="col text-center">
       <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()" [disabled]="!this.eventForm.valid" *ngIf="this.isSaveButtonActive">Speichern</button>

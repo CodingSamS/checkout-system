@@ -77,7 +77,11 @@ export class EventConfigTableComponent implements OnChanges {
   }
 
   get isSetButtonActive(): boolean {
-    return this.selectedEvent && this.selectedEvent != this.databaseAccess.currentEventName;
+    return this.selectedEvent && this.selectedEvent != this.databaseAccess.currentEventName && this.selectedEvent == this.eventForm.controls["title"].value;
+  }
+
+  get isDeleteButtonActive(): boolean {
+    return this.selectedEvent && this.selectedEvent == this.eventForm.controls["title"].value;
   }
 
   get isSaveButtonActive(): boolean {

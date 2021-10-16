@@ -1,26 +1,27 @@
-<div class="container">
-<div class="row mt-4">
-  <div class="col text-center">
-    <h2><span class="badge bg-info bg-opacity-25 text-light">{{ this.data?.eventName }} - Umsatz: {{ this.data?.revenue }} €</span></h2>
+<div class="container" style="max-width: 100vw">
+  <div class="row mt-2">
+    <div class="col text-center">
+      <h2><span class="badge bg-info bg-opacity-25 text-light">{{ this.data?.eventName }} - Umsatz: {{ this.data?.revenue }} €</span></h2>
+    </div>
   </div>
-</div>
-<div class="row m-4 d-flex justify-content-center" style="height: 350px">
-  <div class="col dark">
-    <ngx-charts-bar-vertical-2d
-      [results]="this.data?.plotData"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [legendTitle]="legendTitle"
-      (select)="onSelect($event)"
-      (activate)="onActivate($event)"
-      (deactivate)="onDeactivate($event)">
-    </ngx-charts-bar-vertical-2d>
+  <div class="row mt-4 justify-content-center" style="height: 350px">
+    <div class="col dark">
+      <ngx-charts-bar-vertical-2d
+        [results]="this.data?.plotData"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [legendTitle]="legendTitle"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)">
+      </ngx-charts-bar-vertical-2d>
+    </div>
   </div>
-</div>
+  <hr class="m-5" style="background-color: #1b1e27"/>
 </div>

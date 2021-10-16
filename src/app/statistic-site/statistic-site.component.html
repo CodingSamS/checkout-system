@@ -1,5 +1,5 @@
-<cdk-virtual-scroll-viewport itemSize="400" class="scrollbar-style">
-  <div *cdkVirtualFor="let dataItem of this.data">
+<cdk-virtual-scroll-viewport itemSize="450" class="scrollbar-style">
+  <ng-container *cdkVirtualFor="let dataItem of this.data">
     <app-single-plot [data]="dataItem"></app-single-plot>
-  </div>
+  </ng-container>
 </cdk-virtual-scroll-viewport>
