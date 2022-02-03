@@ -124,8 +124,6 @@ export class DatabaseAccessService {
   }
 
   sortKeyList(keyList: Array<string>): Array<string> {
-    console.log(keyList)
-    console.log(this.database)
     keyList.sort((obj1, obj2) => {
       if(this.database[obj1].lastUpdated < this.database[obj2].lastUpdated) {
         return 1;
@@ -135,7 +133,6 @@ export class DatabaseAccessService {
         return 0;
       }
     })
-    console.log(keyList)
     return keyList;
   }
 
