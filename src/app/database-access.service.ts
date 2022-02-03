@@ -48,14 +48,14 @@ export class DatabaseAccessService {
           this.database[event.eventName].items[i].counterExternal += event.items[i].counter;
         }
       }
-      this.database[event.eventName].lastUpdated = new Date();
+      this.database[event.eventName].lastUpdated = new Date().toISOString();
       this.writeEvent(event.eventName);
     }
   }
 
   overwriteEvent(eventStandalone: EventStandalone): void {
     this.database[eventStandalone.eventName] = {
-      lastUpdated: new Date(),
+      lastUpdated: new Date().toISOString(),
       items: eventStandalone.items
     };
     this.writeEvent(eventStandalone.eventName);
@@ -124,6 +124,8 @@ export class DatabaseAccessService {
   }
 
   sortKeyList(keyList: Array<string>): Array<string> {
+    console.log(keyList)
+    console.log(this.database)
     keyList.sort((obj1, obj2) => {
       if(this.database[obj1].lastUpdated < this.database[obj2].lastUpdated) {
         return 1;
@@ -133,6 +135,7 @@ export class DatabaseAccessService {
         return 0;
       }
     })
+    console.log(keyList)
     return keyList;
   }
 

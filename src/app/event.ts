@@ -12,7 +12,7 @@ export interface CheckoutItem {
 }
 
 export interface Event {
-  lastUpdated: Date,
+  lastUpdated: string,
   items: Array<CheckoutItem>
 }
 
