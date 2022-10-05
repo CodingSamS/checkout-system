@@ -9,7 +9,8 @@
   <div class="row mt-2">
     <div [ngClass]="['col', this.getColSize(), 'p-2', 'm-2', 'mx-auto']" *ngFor="let item of this.eventData.items">
       <app-sale-item
-        [data]="item">
+        [data]="item"
+        (valueChanged)="updateSum()">
       </app-sale-item>
     </div>
   </div>
@@ -18,7 +19,7 @@
 
   <div class="row mt-3 align-items-center">
     <div class="col-6 text-light text-center">
-      <h1>Summe: <span class="badge bg-warning text-dark">{{ this.getSum() }} €</span></h1>
+      <h1>Summe: <span class="badge bg-warning text-dark">{{ this.sum }} €</span></h1>
     </div>
     <div class="col-3 text-light text-end">
       <button type="button" class="btn btn-lg btn-success" (click)="this.submit(false)">Eingabe Extern</button>

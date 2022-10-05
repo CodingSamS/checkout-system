@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
 import {EventStandalone, EventStandaloneSimple} from "../event";
 import { ToastService } from "../toasts/toast.service";
@@ -11,12 +11,15 @@ import { ToastService } from "../toasts/toast.service";
 export class CheckoutSiteComponent implements OnInit {
 
   eventData: EventStandaloneSimple;
+  sum: number;
+  @Output() checkoutLock = new EventEmitter<boolean>();
 
   constructor(private databaseAccess: DatabaseAccessService, private toastService: ToastService) {
     this.eventData = {
       eventName: "No Event selected",
       items: []
-    }
+    };
+    this.sum = 0;
   }
 
   ngOnInit(): void {
@@ -33,12 +36,23 @@ export class CheckoutSiteComponent implements OnInit {
     }
   }
 
-  getSum(): number {
+  updateSum(): void {
     let sum = 0;
     for (const item of this.eventData.items) {
       sum += item.counter * item.price;
     }
-    return sum;
+    this.sum = sum;
+    this.lockCheckout();
+  }
+
+  lockCheckout(): void {
+    for (const item of this.eventData.items) {
+      if (item.counter != 0) {
+        this.checkoutLock.emit(true);
+        return;
+      }
+    }
+    this.checkoutLock.emit(false);
   }
 
   getColSize(): string {
@@ -56,8 +70,10 @@ export class CheckoutSiteComponent implements OnInit {
 
   reset(): void {
     for (const items of this.eventData.items) {
-      items.counter = 0
+      items.counter = 0;
     }
+    this.sum = 0;
+    this.checkoutLock.emit(false);
   }
 
   submit(internal: boolean): void {

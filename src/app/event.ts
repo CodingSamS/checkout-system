@@ -1,4 +1,4 @@
-export interface SimpleCheckoutItem {
+export interface CheckoutItemSimple {
   name: string;
   price: number;
   counter: number;
@@ -23,5 +23,5 @@ export interface EventStandalone {
 
 export interface EventStandaloneSimple {
   eventName: string,
-  items: Array<SimpleCheckoutItem>
+  items: Array<CheckoutItemSimple>
 }

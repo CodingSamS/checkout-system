@@ -1,4 +1,4 @@
-<app-checkout-site *ngIf="this.activeSite == 'Checkout'"></app-checkout-site>
+<app-checkout-site *ngIf="this.activeSite == 'Checkout'" (checkoutLock)="this.applyCheckoutLock($event)"></app-checkout-site>
 <app-statistic-site *ngIf="this.activeSite == 'Statistic'"></app-statistic-site>
 <app-event-management-site *ngIf="this.activeSite == 'EventManagement'"></app-event-management-site>
 <div class="container">
@@ -7,8 +7,8 @@
     <div class="col text-center">
       <div class="btn-group btn-group-lg">
         <button type="button" class="btn btn-secondary" (click)="doCheckout()" [disabled]="this.activeSite == 'Checkout'">Kasse</button>
-        <button type="button" class="btn btn-secondary" (click)="doEvents()" [disabled]="this.activeSite == 'EventManagement'">Veranstaltungen</button>
-        <button type="button" class="btn btn-secondary" (click)="doStatistic()" [disabled]="this.activeSite == 'Statistic'">Statistik</button>
+        <button type="button" class="btn btn-secondary" (click)="doEvents()" [disabled]="this.activeSite == 'EventManagement' || this.checkoutLock">Veranstaltungen</button>
+        <button type="button" class="btn btn-secondary" (click)="doStatistic()" [disabled]="this.activeSite == 'Statistic' || this.checkoutLock">Statistik</button>
       </div>
     </div>
   </div>

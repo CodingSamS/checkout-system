@@ -8,13 +8,20 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'checkout-system';
   activeSite: string;
+  checkoutLock: boolean;
 
-  constructor() {
+  constructor(  ) {
     this.activeSite = "EventManagement";
+    this.checkoutLock = false;
   }
 
   doCheckout(): void {
     this.activeSite = "Checkout";
+  }
+
+  applyCheckoutLock(checkoutLock: boolean): void {
+    console.log(checkoutLock)
+    this.checkoutLock = checkoutLock;
   }
 
   doStatistic(): void {

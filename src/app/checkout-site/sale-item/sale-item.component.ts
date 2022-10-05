@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SimpleCheckoutItem } from "../../event";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CheckoutItemSimple } from "../../event";
 
 @Component({
   selector: 'app-sale-item',
@@ -9,7 +9,8 @@ import { SimpleCheckoutItem } from "../../event";
 
 export class SaleItemComponent implements OnInit {
 
-  @Input() data: SimpleCheckoutItem | undefined;
+  @Input() data: CheckoutItemSimple | undefined;
+  @Output() valueChanged = new EventEmitter<void>();
 
   constructor() {
   }
@@ -21,12 +22,14 @@ export class SaleItemComponent implements OnInit {
     if (this.data != undefined) {
       this.data.counter += 1;
     }
+    this.valueChanged.emit();
   }
 
   decrease(): void {
     if (this.data != undefined) {
       this.data.counter -= 1;
     }
+    this.valueChanged.emit();
   }
 
 }
