@@ -125,7 +125,15 @@ export class EventConfigTableComponent implements OnChanges {
     } else {
       this.toastService.showDanger("Setzen der Veranstaltung fehlgeschlagen")
     }
+  }
 
+  resetEvent(): void {
+    for (let i = 0; i < this.items.length; i++) {
+      this.items.at(i).patchValue({
+        counterInternal: 0,
+        counterExternal: 0
+      })
+    }
   }
 
   saveConfigTable(): void {
