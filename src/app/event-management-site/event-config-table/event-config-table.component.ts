@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
 import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  UntypedFormArray,
   Validators,
   ValidatorFn,
   AbstractControl,
@@ -20,14 +20,14 @@ import {CdkDragDrop} from "@angular/cdk/drag-drop";
 })
 export class EventConfigTableComponent implements OnChanges {
 
-  eventForm: FormGroup;
+  eventForm: UntypedFormGroup;
   deleteRowState: Array<boolean>;
   @Input() selectedEvent: any;
   @Output() newEventCreated: EventEmitter<String>;
   @Output() currentEventDeleted: EventEmitter<null>;
   createUniqueTitleValidator: () => ValidatorFn;
 
-  constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
+  constructor(private toastService: ToastService, private fb: UntypedFormBuilder, private databaseAccess: DatabaseAccessService) {
     this.newEventCreated = new EventEmitter<String>();
     this.currentEventDeleted = new EventEmitter<null>();
     this.deleteRowState = [];
@@ -90,7 +90,7 @@ export class EventConfigTableComponent implements OnChanges {
   }
 
   get items() {
-    return this.eventForm.controls["items"] as FormArray;
+    return this.eventForm.controls["items"] as UntypedFormArray;
   }
 
   changeDeleteRowState(itemIndex: number) {
@@ -143,7 +143,7 @@ export class EventConfigTableComponent implements OnChanges {
       let items: Array<CheckoutItem> = []
 
       for (let i = 0; i < this.items.controls.length; i++) {
-        let fg = this.items.controls[i] as FormGroup;
+        let fg = this.items.controls[i] as UntypedFormGroup;
         items.push({
           name: fg.controls.name.value,
           price: fg.controls.price.value,
