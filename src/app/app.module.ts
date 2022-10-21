@@ -16,7 +16,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {DragDropModule} from "@angular/cdk/drag-drop";
-import {NgIconComponent} from "@ng-icons/core";
 
 @NgModule({
   declarations: [
@@ -38,8 +37,7 @@ import {NgIconComponent} from "@ng-icons/core";
     MDBBootstrapModule,
     ReactiveFormsModule,
     ScrollingModule,
-    DragDropModule,
-    NgIconComponent
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
