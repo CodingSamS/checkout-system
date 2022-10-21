@@ -13,7 +13,6 @@ import { EventConfigTableComponent } from './event-management-site/event-config-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastComponent } from './toasts/toast/toast.component'
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 
@@ -34,7 +33,6 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     SelectDropDownModule,
     NgbModule,
     FormsModule,
-    MDBBootstrapModule,
     ReactiveFormsModule,
     ScrollingModule,
     DragDropModule
