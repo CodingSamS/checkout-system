@@ -176,20 +176,17 @@ export class EventConfigTableComponent implements OnChanges {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousIndex);
-    console.log(event.currentIndex);
-    let pos1 = event.previousIndex;
-    let pos2 = event.currentIndex;
+    let start_pos = event.previousIndex;
+    let end_pos = event.currentIndex;
 
-    if ( pos1 == pos2 ) {
+    if ( start_pos == end_pos ) {
       return;
     }
 
-    let item1 = this.items.at(pos1) ;
-    let item2 = this.items.at(pos2);
+    let item = this.items.at(start_pos) ;
 
-    this.items.setControl(pos1, item2);
-    this.items.setControl(pos2, item1);
+    this.items.removeAt(start_pos);
+    this.items.insert(end_pos, item);
   }
 
 }
