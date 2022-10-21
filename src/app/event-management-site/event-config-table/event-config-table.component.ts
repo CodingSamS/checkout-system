@@ -11,6 +11,7 @@ import {
 } from "@angular/forms";
 import {DatabaseAccessService} from "../../database-access.service";
 import {CheckoutItem, EventStandalone} from "../../event";
+import {CdkDragDrop} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-event-config-table',
@@ -172,6 +173,23 @@ export class EventConfigTableComponent implements OnChanges {
   deleteEvent(): void {
     this.databaseAccess.deleteEvent(this.selectedEvent);
     this.currentEventDeleted.emit();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event.previousIndex);
+    console.log(event.currentIndex);
+    let pos1 = event.previousIndex;
+    let pos2 = event.currentIndex;
+
+    if ( pos1 == pos2 ) {
+      return;
+    }
+
+    let item1 = this.items.at(pos1) ;
+    let item2 = this.items.at(pos2);
+
+    this.items.setControl(pos1, item2);
+    this.items.setControl(pos2, item1);
   }
 
 }

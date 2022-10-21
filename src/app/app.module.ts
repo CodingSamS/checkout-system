@@ -15,6 +15,8 @@ import { ToastComponent } from './toasts/toast/toast.component'
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {NgIconComponent} from "@ng-icons/core";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     FormsModule,
     MDBBootstrapModule,
     ReactiveFormsModule,
-    ScrollingModule
+    ScrollingModule,
+    DragDropModule,
+    NgIconComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

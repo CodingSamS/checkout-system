@@ -13,8 +13,9 @@
         </div>
         <div class="card-body">
           <div id="table" class="table-editable">
-            <table class="table table-bordered table-striped text-center text-light">
+            <table class="table table-bordered table-striped text-center text-light" cdkDropList (cdkDropListDropped)="this.drop($event)">
               <tr>
+                <th class="text-center col-1"></th>
                 <th class="text-center col-4">Name</th>
                 <th class="text-center col-2">Preis (€)</th>
                 <th class="text-center col-2">Anzahl verkauft (extern)</th>
@@ -23,7 +24,10 @@
               </tr>
               <ng-container formArrayName="items">
                 <ng-container *ngFor="let item of this.items.controls; let i = index">
-                  <tr [formGroupName]="i">
+                  <tr [formGroupName]="i" cdkDrag>
+                    <td cdkDragHandle>
+                      <ng-icon name="oct-three-bars"></ng-icon>
+                    </td>
                     <td>
                       <input
                         type="text"
