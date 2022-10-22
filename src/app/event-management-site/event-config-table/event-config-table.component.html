@@ -16,7 +16,7 @@
             <table class="table table-bordered table-striped text-center text-light" cdkDropList (cdkDropListDropped)="this.drop($event)">
               <tr>
                 <th class="text-center col-1"></th>
-                <th class="text-center col-4">Name</th>
+                <th class="text-center col-3">Name</th>
                 <th class="text-center col-2">Preis (€)</th>
                 <th class="text-center col-2">Anzahl verkauft (extern)</th>
                 <th class="text-center col-2">Anzahl verkauft (intern)</th>
@@ -25,8 +25,10 @@
               <ng-container formArrayName="items">
                 <ng-container *ngFor="let item of this.items.controls; let i = index">
                   <tr [formGroupName]="i" cdkDrag>
-                    <td cdkDragHandle>
-                      <ng-icon name="oct-three-bars"></ng-icon>
+                    <td class="cdk-drop-list-dragging" cdkDragHandle>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white" class="bi bi-grip-horizontal" viewBox="0 0 16 16">
+                        <path d="M2 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                      </svg>
                     </td>
                     <td>
                       <input

@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
 import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  UntypedFormArray,
   Validators,
   ValidatorFn,
   AbstractControl,
@@ -20,14 +20,14 @@ import {CdkDragDrop} from "@angular/cdk/drag-drop";
 })
 export class EventConfigTableComponent implements OnChanges {
 
-  eventForm: FormGroup;
+  eventForm: UntypedFormGroup;
   deleteRowState: Array<boolean>;
   @Input() selectedEvent: any;
   @Output() newEventCreated: EventEmitter<String>;
   @Output() currentEventDeleted: EventEmitter<null>;
   createUniqueTitleValidator: () => ValidatorFn;
 
-  constructor(private toastService: ToastService, private fb: FormBuilder, private databaseAccess: DatabaseAccessService) {
+  constructor(private toastService: ToastService, private fb: UntypedFormBuilder, private databaseAccess: DatabaseAccessService) {
     this.newEventCreated = new EventEmitter<String>();
     this.currentEventDeleted = new EventEmitter<null>();
     this.deleteRowState = [];
@@ -90,7 +90,7 @@ export class EventConfigTableComponent implements OnChanges {
   }
 
   get items() {
-    return this.eventForm.controls["items"] as FormArray;
+    return this.eventForm.controls["items"] as UntypedFormArray;
   }
 
   changeDeleteRowState(itemIndex: number) {
@@ -143,7 +143,7 @@ export class EventConfigTableComponent implements OnChanges {
       let items: Array<CheckoutItem> = []
 
       for (let i = 0; i < this.items.controls.length; i++) {
-        let fg = this.items.controls[i] as FormGroup;
+        let fg = this.items.controls[i] as UntypedFormGroup;
         items.push({
           name: fg.controls.name.value,
           price: fg.controls.price.value,
@@ -176,20 +176,17 @@ export class EventConfigTableComponent implements OnChanges {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousIndex);
-    console.log(event.currentIndex);
-    let pos1 = event.previousIndex;
-    let pos2 = event.currentIndex;
+    let start_pos = event.previousIndex;
+    let end_pos = event.currentIndex;
 
-    if ( pos1 == pos2 ) {
+    if ( start_pos == end_pos ) {
       return;
     }
 
-    let item1 = this.items.at(pos1) ;
-    let item2 = this.items.at(pos2);
+    let item = this.items.at(start_pos) ;
 
-    this.items.setControl(pos1, item2);
-    this.items.setControl(pos2, item1);
+    this.items.removeAt(start_pos);
+    this.items.insert(end_pos, item);
   }
 
 }
