@@ -5,9 +5,6 @@ The system has 3 Tabs:
 
 ## Checkout Tab
 
-<div style="width:60px ; height:60px">
-![Checkout Tab](/repository/assets/checkout.png?raw=true "Checkout")
-<div>
-
+![Employee data](/repository/assets/checkout.png?raw=true "Employee Data title")
 
 This tab is for taking customers orders, calculating the price and saving the sold items to the database. There is a distinction between "intern" (for people not paying at the event) and "extern" (paying customers). Only "extern" is used for calculating the revenue.
