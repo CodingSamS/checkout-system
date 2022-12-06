@@ -7,10 +7,16 @@ The system has 3 Tabs:
 
 This tab is for taking customers orders, calculating the price and saving the sold items to the database. There is a distinction between "intern" (for people not paying at the event) and "extern" (paying customers). Only "extern" is used for calculating the revenue.
 
-![Screenshot](assets/checkout.png)
+![Checkout](assets/checkout.png)
 
 ## Event Management
 
-This Tab is for managing the event: Creating new ones, changing icons, and so on. Additionally, in this tab the current event is set. The current event is the one displayed in the Checkout tab.
+This tab is for managing the event: Creating new ones, changing icons, and so on. Additionally, in this tab the current event is set. The current event is the one displayed in the Checkout tab.
 
-![Screenshot](assets/event.png)
+![Event Management](assets/event.png)
+
+## Statistic
+
+This tab shows stats about the items sold.
+
+![Statistic]{assets/statistic.png}
