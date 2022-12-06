@@ -19,4 +19,4 @@ This tab is for managing the event: Creating new ones, changing icons, and so on
 
 This tab shows stats about the items sold.
 
-![Statistic]{assets/statistic.png}
+![Statistic](assets/statistic.png)
