@@ -3,8 +3,14 @@ This is a cross-platform application written with Angular and Electron. It provi
 
 The system has 3 Tabs:
 
-## Checkout Tab
-
-![Employee data](/repository/assets/checkout.png?raw=true "Employee Data title")
+## Checkout
 
 This tab is for taking customers orders, calculating the price and saving the sold items to the database. There is a distinction between "intern" (for people not paying at the event) and "extern" (paying customers). Only "extern" is used for calculating the revenue.
+
+![Screenshot](assets/checkout.png)
+
+## Event Management
+
+This Tab is for managing the event: Creating new ones, changing icons, and so on. Additionally, in this tab the current event is set. The current event is the one displayed in the Checkout tab.
+
+![Screenshot](assets/event.png)
