@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
 
 @Component({
-  selector: 'app-statistic-site',
-  templateUrl: './statistic-site.component.html',
-  styleUrls: ['./statistic-site.component.scss']
+    selector: 'app-statistic-site',
+    templateUrl: './statistic-site.component.html',
+    styleUrls: ['./statistic-site.component.scss'],
+    standalone: false
 })
 export class StatisticSiteComponent implements OnInit {
 

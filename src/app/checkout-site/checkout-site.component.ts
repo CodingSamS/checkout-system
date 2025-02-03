@@ -4,9 +4,10 @@ import {EventStandalone, EventStandaloneSimple} from "../event";
 import { ToastService } from "../toasts/toast.service";
 
 @Component({
-  selector: 'app-checkout-site',
-  templateUrl: './checkout-site.component.html',
-  styleUrls: ['./checkout-site.component.scss']
+    selector: 'app-checkout-site',
+    templateUrl: './checkout-site.component.html',
+    styleUrls: ['./checkout-site.component.scss'],
+    standalone: false
 })
 export class CheckoutSiteComponent implements OnInit {
 

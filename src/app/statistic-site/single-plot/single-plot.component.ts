@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-single-plot',
-  templateUrl: './single-plot.component.html',
-  styleUrls: ['./single-plot.component.scss']
+    selector: 'app-single-plot',
+    templateUrl: './single-plot.component.html',
+    styleUrls: ['./single-plot.component.scss'],
+    standalone: false
 })
 export class SinglePlotComponent implements OnInit {
 

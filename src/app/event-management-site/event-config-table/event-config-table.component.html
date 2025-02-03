@@ -4,16 +4,15 @@
       <div class="card text-light bg-secondary bg-opacity-25">
         <div class="card-header modal-dialog-centered">
           <div class="col-6 mx-auto">
-            <input type="text"
-                   class="form-control form-control-lg bg-secondary text-center fw-bold"
-                   [class.is-invalid]="this.eventForm.controls.title.valid == false"
-                   [class.is-valid]="this.eventForm.controls.title.valid"
-                   formControlName="title">
+            <input type="text" class="form-control form-control-lg bg-secondary text-center fw-bold"
+              [class.is-invalid]="this.eventForm.controls['title'].valid == false"
+              [class.is-valid]="this.eventForm.controls['title'].valid" formControlName="title">
           </div>
         </div>
         <div class="card-body">
           <div id="table" class="table-editable">
-            <table class="table table-bordered table-striped text-center text-light" cdkDropList (cdkDropListDropped)="this.drop($event)">
+            <table class="table table-bordered table-striped text-center text-light" cdkDropList
+              (cdkDropListDropped)="this.drop($event)">
               <tr>
                 <th class="text-center col-1"></th>
                 <th class="text-center col-4">Name</th>
@@ -26,56 +25,54 @@
                 <ng-container *ngFor="let item of this.items.controls; let i = index">
                   <tr [formGroupName]="i" cdkDrag>
                     <td class="cdk-drop-list-dragging" cdkDragHandle>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white" class="bi bi-grip-horizontal" viewBox="0 0 16 16">
-                        <path d="M2 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="white"
+                        class="bi bi-grip-horizontal bg-transparent" viewBox="0 0 16 16">
+                        <path
+                          d="M2 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                       </svg>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        class="form-control bg-secondary fw-bold"
+                      <input type="text" class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('name')?.valid == false"
-                        [class.is-valid]="items.controls[i].get('name')?.valid"
-                        formControlName="name">
+                        [class.is-valid]="items.controls[i].get('name')?.valid" formControlName="name">
                     </td>
                     <td>
-                      <input
-                        type="number"
-                        class="form-control bg-secondary fw-bold"
+                      <input type="number" class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('price')?.valid == false"
-                        [class.is-valid]="items.controls[i].get('price')?.valid"
-                        formControlName="price">
+                        [class.is-valid]="items.controls[i].get('price')?.valid" formControlName="price">
                     </td>
                     <td>
-                      <input
-                        type="number"
-                        class="form-control bg-secondary fw-bold"
+                      <input type="number" class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('counterExternal')?.valid == false"
                         [class.is-valid]="items.controls[i].get('counterExternal')?.valid"
                         formControlName="counterExternal">
                     </td>
                     <td>
-                      <input
-                        type="number"
-                        class="form-control bg-secondary fw-bold"
+                      <input type="number" class="form-control bg-secondary fw-bold"
                         [class.is-invalid]="items.controls[i].get('counterInternal')?.valid == false"
                         [class.is-valid]="items.controls[i].get('counterInternal')?.valid"
                         formControlName="counterInternal">
                     </td>
                     <td>
-                    <span class="table-remove">
-                      <button class="btn btn-warning btn-sm m-1" (click)="changeDeleteRowState(i)" *ngIf="!this.deleteRowState[i]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                        </svg>
-                      </button>
-                      <button class="btn btn-danger btn-sm m-1" (click)="deleteItem(i)" *ngIf="this.deleteRowState[i]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                          <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
-                        </svg>
-                      </button>
-                    </span>
+                      <span class="table-remove bg-transparent">
+                        <button class="btn btn-warning btn-sm m-1" (click)="changeDeleteRowState(i)"
+                          *ngIf="!this.deleteRowState[i]">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path
+                              d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                          </svg>
+                        </button>
+                        <button class="btn btn-danger btn-sm m-1" (click)="deleteItem(i)"
+                          *ngIf="this.deleteRowState[i]">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path
+                              d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+                          </svg>
+                        </button>
+                      </span>
                     </td>
                   </tr>
                 </ng-container>
@@ -88,34 +85,34 @@
     </div>
   </div>
 
-  <hr class="bg-light mt-3"/>
+  <hr class="bg-light mt-3" />
 
   <div class="row mt-3">
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" [disabled]="!this.isDeleteButtonActive">Löschen</button>
+      <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+        [disabled]="!this.isDeleteButtonActive">Löschen</button>
     </div>
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-light" (click)="this.resetEvent()" [disabled]="!this.isDeleteButtonActive">Zurücksetzen</button>
+      <button type="button" class="btn btn-lg btn-light" (click)="this.resetEvent()"
+        [disabled]="!this.isDeleteButtonActive">Zurücksetzen</button>
     </div>
     <div class="col">
     </div>
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-info" (click)="this.setCurrentEvent()" [disabled]="!this.isSetButtonActive">Setzen</button>
+      <button type="button" class="btn btn-lg btn-info" (click)="this.setCurrentEvent()"
+        [disabled]="!this.isSetButtonActive">Setzen</button>
     </div>
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()" [disabled]="!this.eventForm.valid" *ngIf="this.isSaveButtonActive">Speichern</button>
-      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()" [disabled]="!this.eventForm.valid" *ngIf="!this.isSaveButtonActive">Anlegen</button>
+      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()"
+        [disabled]="!this.eventForm.valid" *ngIf="this.isSaveButtonActive">Speichern</button>
+      <button type="button" class="btn btn-lg btn-success" (click)="this.saveConfigTable()"
+        [disabled]="!this.eventForm.valid" *ngIf="!this.isSaveButtonActive">Anlegen</button>
     </div>
   </div>
 
 </div>
 
-<div
-  class="modal fade"
-  id="deleteModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="deleteModalLabel"
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
     <div class="modal-content bg-dark">
@@ -123,15 +120,10 @@
         <h4 class="modal-title w-100" id="deleteModalLabel">Lösche Veranstaltung: <b>{{this.selectedEvent}}</b></h4>
       </div>
       <div class="modal-footer justify-content-between">
-        <button type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Abbrechen
         </button>
-        <button type="button"
-                class="btn btn-lg btn-danger"
-                data-bs-dismiss="modal"
-                (click)="this.deleteEvent()">
+        <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal" (click)="this.deleteEvent()">
           Löschen
         </button>
       </div>

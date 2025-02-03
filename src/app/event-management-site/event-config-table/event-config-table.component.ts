@@ -14,9 +14,10 @@ import {CheckoutItem, EventStandalone} from "../../event";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
 
 @Component({
-  selector: 'app-event-config-table',
-  templateUrl: './event-config-table.component.html',
-  styleUrls: ['./event-config-table.component.scss']
+    selector: 'app-event-config-table',
+    templateUrl: './event-config-table.component.html',
+    styleUrls: ['./event-config-table.component.scss'],
+    standalone: false
 })
 export class EventConfigTableComponent implements OnChanges {
 
@@ -145,15 +146,15 @@ export class EventConfigTableComponent implements OnChanges {
       for (let i = 0; i < this.items.controls.length; i++) {
         let fg = this.items.controls[i] as UntypedFormGroup;
         items.push({
-          name: fg.controls.name.value,
-          price: fg.controls.price.value,
-          counterInternal: fg.controls.counterInternal.value,
-          counterExternal: fg.controls.counterExternal.value
+          name: fg.controls['name'].value,
+          price: fg.controls['price'].value,
+          counterInternal: fg.controls['counterInternal'].value,
+          counterExternal: fg.controls['counterExternal'].value
         })
       }
 
       let event: EventStandalone = {
-        eventName: this.eventForm.controls.title.value,
+        eventName: this.eventForm.controls['title'].value,
         items: items
       }
 

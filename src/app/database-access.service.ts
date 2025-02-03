@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {ElectronService} from "./electron.service";
 import {CheckoutItem, Event, EventStandalone, EventStandaloneSimple} from './event';
 
 @Injectable({
@@ -10,33 +9,40 @@ export class DatabaseAccessService {
   database: Record<string, Event>;
   currentEventName: string | undefined;
 
-  constructor(private electronService: ElectronService) {
+  constructor() {
+    /*
     if(this.electronService.isElectron) {
       this.database = JSON.parse(this.electronService.ipcRenderer?.sendSync('getDatabase'));
     } else {
       this.database = {}
       throw new Error("No Electron support present");
     }
+    */
+    this.database = {};
     this.currentEventName = this.getNewestEventName();
   }
 
   writeEvent(eventName: string): void {
     // Overwrite the database file
+    /*
     if(this.electronService.isElectron) {
       this.electronService.ipcRenderer?.send('writeEvent', {
         eventName: eventName,
         eventData: JSON.stringify(this.database[eventName])
       });
     }
+    */
   }
 
   deleteEvent(eventName: string): void {
     // delete in active database
     delete this.database[eventName];
     // trigger file delete on electron layer
+    /*
     if(this.electronService.isElectron) {
       this.electronService.ipcRenderer?.send('deleteEvent', eventName);
     }
+    */
   }
 
   updateCounter(event: EventStandaloneSimple, internal: boolean): void {

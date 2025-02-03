@@ -15,6 +15,7 @@ import { ToastComponent } from './toasts/toast/toast.component'
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     ScrollingModule,
     DragDropModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,9 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CheckoutItemSimple } from "../../event";
 
 @Component({
-  selector: 'app-sale-item',
-  templateUrl: './sale-item.component.html',
-  styleUrls: ['./sale-item.component.scss']
+    selector: 'app-sale-item',
+    templateUrl: './sale-item.component.html',
+    styleUrls: ['./sale-item.component.scss'],
+    standalone: false
 })
 
 export class SaleItemComponent implements OnInit {

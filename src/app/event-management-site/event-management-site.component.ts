@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
 
 @Component({
-  selector: 'app-event-management-site',
-  templateUrl: './event-management-site.component.html',
-  styleUrls: ['./event-management-site.component.scss']
+    selector: 'app-event-management-site',
+    templateUrl: './event-management-site.component.html',
+    styleUrls: ['./event-management-site.component.scss'],
+    standalone: false
 })
 export class EventManagementSiteComponent implements OnInit {
 
