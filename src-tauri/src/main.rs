@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    checkout_clone_lib::run()
+    checkout_system_lib::run()
 }

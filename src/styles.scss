@@ -1,3 +1,6 @@
+/* Importing Bootstrap SCSS file. */
+@use "../node_modules/bootstrap/scss/bootstrap";
+
 /* You can add global styles to this file, and also import other style files */
 .dark {
   /**
@@ -157,8 +160,6 @@
   }
 }
 
-/* Importing Bootstrap SCSS file. */
-@import "../node_modules/bootstrap/scss/bootstrap";
 
 /* hiding all the scrollbars - scrolling with mouse wheel still works - this option is electron specific -> won't work for web browsers*/
 ::-webkit-scrollbar {
