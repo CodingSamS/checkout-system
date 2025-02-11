@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CheckoutItem, Event, EventStandalone, EventStandaloneSimple} from './event';
+import { invoke } from "@tauri-apps/api/core";
+import { warn, debug, trace, info, error } from '@tauri-apps/plugin-log';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +12,18 @@ export class DatabaseAccessService {
   currentEventName: string | undefined;
 
   constructor() {
-    /*
-    if(this.electronService.isElectron) {
-      this.database = JSON.parse(this.electronService.ipcRenderer?.sendSync('getDatabase'));
-    } else {
-      this.database = {}
-      throw new Error("No Electron support present");
-    }
-    */
+    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
     this.database = {};
-    this.currentEventName = this.getNewestEventName();
+  }
+
+  initialize(): Promise<any> {
+    return invoke<Record<string, Event>>("get_database").then((data) => {
+      info(JSON.stringify(data));
+      this.database = data;
+    }).finally(
+      () => {
+      this.currentEventName = this.getNewestEventName();
+    })
   }
 
   writeEvent(eventName: string): void {

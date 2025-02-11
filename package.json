@@ -25,6 +25,7 @@
     "@popperjs/core": "^2.11.8",
     "@swimlane/ngx-charts": "^22.0.0-alpha.0",
     "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-log": "^2.2.1",
     "@tauri-apps/plugin-opener": "^2",
     "bootstrap": "^5.3.3",
     "cdk": "^2.177.0",
