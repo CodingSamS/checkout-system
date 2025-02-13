@@ -1,10 +1,28 @@
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use std::fs;
+use std::fs::{self, File};
+use std::io::BufReader;
 use std::path::PathBuf;
 use std::sync::OnceLock;
 use tauri::Manager;
 
 static APP_DATA_DIR: OnceLock<PathBuf> = OnceLock::new();
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct CheckoutItem {
+    name: String,
+    price: f64,
+    counter_external: u64,
+    counter_internal: u64,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct Event {
+    last_updated: String,
+    items: Vec<CheckoutItem>,
+}
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -13,9 +31,8 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn get_database() -> HashMap<String, String> {
-    println!("get database");
-    let mut database: HashMap<String, String> = HashMap::new();
+fn get_database() -> HashMap<String, Event> {
+    let mut database = HashMap::new();
     for file in std::fs::read_dir(APP_DATA_DIR.get().unwrap())
         .unwrap()
         .filter_map(|file_result| file_result.ok())
@@ -25,7 +42,8 @@ fn get_database() -> HashMap<String, String> {
                 Some(prefix) => {
                     database.insert(
                         String::from(prefix),
-                        std::fs::read_to_string(file.path()).unwrap(),
+                        serde_json::from_reader(BufReader::new(File::open(file.path()).unwrap()))
+                            .unwrap(),
                     );
                 }
                 None => (),
