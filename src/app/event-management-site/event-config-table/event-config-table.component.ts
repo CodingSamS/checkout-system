@@ -12,6 +12,7 @@ import {
 import {DatabaseAccessService} from "../../database-access.service";
 import {CheckoutItem, EventStandalone} from "../../event";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import { warn, debug, trace, info, error } from '@tauri-apps/plugin-log';
 
 @Component({
     selector: 'app-event-config-table',

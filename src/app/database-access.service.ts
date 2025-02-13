@@ -18,11 +18,11 @@ export class DatabaseAccessService {
 
   initialize(): Promise<any> {
     return invoke<Record<string, Event>>("get_database").then((data) => {
-      info(JSON.stringify(data));
       this.database = data;
     }).finally(
       () => {
       this.currentEventName = this.getNewestEventName();
+      info(JSON.stringify(this.database));
     })
   }
 
@@ -72,6 +72,7 @@ export class DatabaseAccessService {
   }
 
   setCurrentEvent(eventName: string): boolean {
+      info(JSON.stringify(this.database));
     if (this.database[eventName] !== undefined){
       this.currentEventName = eventName;
       return true;
@@ -114,9 +115,16 @@ export class DatabaseAccessService {
   }
 
   getEventItems(eventName: string): Array<CheckoutItem> | undefined {
+    info("get event items called")
     if (this.database[eventName] !== undefined) {
+      let event = this.database[eventName];
+      console.log(event);
+      console.log(event.lastUpdated);
+      console.log(event.items);
+      console.log(event['items']);
       return this.database[eventName].items;
     } else {
+      info("eventName is undefined")
       return undefined;
     }
   }

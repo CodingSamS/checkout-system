@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
+import { warn, debug, trace, info, error } from '@tauri-apps/plugin-log';
 
 @Component({
     selector: 'app-statistic-site',
@@ -16,6 +17,7 @@ export class StatisticSiteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //info("statistic init");
     for (let eventKey of this.databaseAccess.getSortedKeyList(false)) {
       let plotData: any[];
       plotData = [];

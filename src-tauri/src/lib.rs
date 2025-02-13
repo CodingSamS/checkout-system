@@ -14,6 +14,7 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn get_database() -> HashMap<String, String> {
+    println!("get database");
     let mut database: HashMap<String, String> = HashMap::new();
     for file in std::fs::read_dir(APP_DATA_DIR.get().unwrap())
         .unwrap()
@@ -51,7 +52,6 @@ fn setup_handler(app: &mut tauri::App) -> Result<(), Box<dyn std::error::Error +
         .set(app.path().app_data_dir()?.join("database"))
         .unwrap();
     fs::create_dir_all(APP_DATA_DIR.get().unwrap())?;
-    println!("{:?}", APP_DATA_DIR.get());
 
     Ok(())
 }
