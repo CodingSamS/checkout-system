@@ -27,25 +27,19 @@ export class DatabaseAccessService {
 
   writeEvent(eventName: string): void {
     // Overwrite the database file
-    /*
-    if(this.electronService.isElectron) {
-      this.electronService.ipcRenderer?.send('writeEvent', {
-        eventName: eventName,
-        eventData: JSON.stringify(this.database[eventName])
-      });
-    }
-    */
+    invoke("write_event", {
+      eventName: eventName,
+      eventData: this.database[eventName]
+    }) 
   }
 
   deleteEvent(eventName: string): void {
     // delete in active database
     delete this.database[eventName];
-    // trigger file delete on electron layer
-    /*
-    if(this.electronService.isElectron) {
-      this.electronService.ipcRenderer?.send('deleteEvent', eventName);
-    }
-    */
+    // trigger file delete on tauri
+    invoke("delete_event", {
+      eventName: eventName
+    })
   }
 
   updateCounter(event: EventStandaloneSimple, internal: boolean): void {

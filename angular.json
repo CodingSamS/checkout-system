@@ -15,7 +15,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/checkout-clone",
+            "outputPath": "dist/checkout-system",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
