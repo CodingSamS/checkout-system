@@ -89,8 +89,8 @@
 
   <div class="row mt-3">
     <div class="col text-center">
-      <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
-        [disabled]="!this.isDeleteButtonActive">Löschen</button>
+      <button type="button" class="btn btn-lg btn-danger" [disabled]="!this.isDeleteButtonActive"
+        (click)="open(deleteModal)">Löschen</button>
     </div>
     <div class="col text-center">
       <button type="button" class="btn btn-lg btn-light" (click)="this.resetEvent()"
@@ -112,21 +112,18 @@
 
 </div>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content bg-dark">
-      <div class="modal-header text-center text-light">
-        <h4 class="modal-title w-100" id="deleteModalLabel">Lösche Veranstaltung: <b>{{this.selectedEvent}}</b></h4>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Abbrechen
-        </button>
-        <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal" (click)="this.deleteEvent()">
-          Löschen
-        </button>
-      </div>
+<ng-template #deleteModal let-modal>
+  <div class="modal-content bg-dark">
+    <div class="modal-header text-center text-light">
+      <h4 class="modal-title w-100" id="deleteModalLabel">Lösche Veranstaltung:<br><b>{{this.selectedEvent}}</b></h4>
+    </div>
+    <div class="modal-footer justify-content-between">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('abort click')">
+        Abbrechen
+      </button>
+      <button type="button" class="btn btn-lg btn-danger" (click)="modal.close('confirm click')">
+        Löschen
+      </button>
     </div>
   </div>
-</div>
+</ng-template>

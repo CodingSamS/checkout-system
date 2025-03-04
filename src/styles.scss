@@ -159,9 +159,3 @@
     color: $color-text-med;
   }
 }
-
-
-/* hiding all the scrollbars - scrolling with mouse wheel still works - this option is electron specific -> won't work for web browsers*/
-::-webkit-scrollbar {
-  display: none;
-}

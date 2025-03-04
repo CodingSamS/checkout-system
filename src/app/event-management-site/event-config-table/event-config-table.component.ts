@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnChanges, Output, signal, TemplateRef, WritableSignal} from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
 import {
   UntypedFormBuilder,
@@ -12,7 +12,7 @@ import {
 import {DatabaseAccessService} from "../../database-access.service";
 import {CheckoutItem, EventStandalone} from "../../event";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
-import { warn, debug, trace, info, error } from '@tauri-apps/plugin-log';
+import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-event-config-table',
@@ -28,6 +28,9 @@ export class EventConfigTableComponent implements OnChanges {
   @Output() newEventCreated: EventEmitter<String>;
   @Output() currentEventDeleted: EventEmitter<null>;
   createUniqueTitleValidator: () => ValidatorFn;
+
+  // the modal from https://ng-bootstrap.github.io/#/components/modal/examples
+  private modalService = inject(NgbModal);
 
   constructor(private toastService: ToastService, private fb: UntypedFormBuilder, private databaseAccess: DatabaseAccessService) {
     this.newEventCreated = new EventEmitter<String>();
@@ -77,6 +80,18 @@ export class EventConfigTableComponent implements OnChanges {
         items: this.fb.array([])
       });
     }
+  }
+
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'deleteModalLabel', windowClass: 'modal-sm' }).result.then(
+      (_) => {
+        console.log("modal close succesfully (only when confirming)");
+        this.deleteEvent();
+      },
+      (_) => {
+        console.log("modal dismissed");
+      }
+    )
   }
 
   get isSetButtonActive(): boolean {
