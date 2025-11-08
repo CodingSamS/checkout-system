@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ElectronService} from "./electron.service";
 import {CheckoutItem, Event, EventStandalone, EventStandaloneSimple} from './event';
+import { invoke } from "@tauri-apps/api/core";
+import { warn, debug, trace, info, error } from '@tauri-apps/plugin-log';
 
 @Injectable({
   providedIn: 'root'
@@ -10,33 +11,35 @@ export class DatabaseAccessService {
   database: Record<string, Event>;
   currentEventName: string | undefined;
 
-  constructor(private electronService: ElectronService) {
-    if(this.electronService.isElectron) {
-      this.database = JSON.parse(this.electronService.ipcRenderer?.sendSync('getDatabase'));
-    } else {
-      this.database = {}
-      throw new Error("No Electron support present");
-    }
-    this.currentEventName = this.getNewestEventName();
+  constructor() {
+    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+    this.database = {};
+  }
+
+  async initialize(): Promise<any> {
+    return invoke<Record<string, Event>>("get_database").then((data) => {
+      this.database = data;
+    }).finally(
+      () => {
+      this.currentEventName = this.getNewestEventName();
+    })
   }
 
   writeEvent(eventName: string): void {
     // Overwrite the database file
-    if(this.electronService.isElectron) {
-      this.electronService.ipcRenderer?.send('writeEvent', {
-        eventName: eventName,
-        eventData: JSON.stringify(this.database[eventName])
-      });
-    }
+    invoke("write_event", {
+      eventName: eventName,
+      eventData: this.database[eventName]
+    }) 
   }
 
   deleteEvent(eventName: string): void {
     // delete in active database
     delete this.database[eventName];
-    // trigger file delete on electron layer
-    if(this.electronService.isElectron) {
-      this.electronService.ipcRenderer?.send('deleteEvent', eventName);
-    }
+    // trigger file delete on tauri
+    invoke("delete_event", {
+      eventName: eventName
+    })
   }
 
   updateCounter(event: EventStandaloneSimple, internal: boolean): void {

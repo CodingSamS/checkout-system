@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnChanges, Output, signal, TemplateRef, WritableSignal} from '@angular/core';
 import { ToastService } from "../../toasts/toast.service";
 import {
   UntypedFormBuilder,
@@ -12,11 +12,13 @@ import {
 import {DatabaseAccessService} from "../../database-access.service";
 import {CheckoutItem, EventStandalone} from "../../event";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-event-config-table',
-  templateUrl: './event-config-table.component.html',
-  styleUrls: ['./event-config-table.component.scss']
+    selector: 'app-event-config-table',
+    templateUrl: './event-config-table.component.html',
+    styleUrls: ['./event-config-table.component.scss'],
+    standalone: false
 })
 export class EventConfigTableComponent implements OnChanges {
 
@@ -26,6 +28,9 @@ export class EventConfigTableComponent implements OnChanges {
   @Output() newEventCreated: EventEmitter<String>;
   @Output() currentEventDeleted: EventEmitter<null>;
   createUniqueTitleValidator: () => ValidatorFn;
+
+  // the modal from https://ng-bootstrap.github.io/#/components/modal/examples
+  private modalService = inject(NgbModal);
 
   constructor(private toastService: ToastService, private fb: UntypedFormBuilder, private databaseAccess: DatabaseAccessService) {
     this.newEventCreated = new EventEmitter<String>();
@@ -75,6 +80,18 @@ export class EventConfigTableComponent implements OnChanges {
         items: this.fb.array([])
       });
     }
+  }
+
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'deleteModalLabel', windowClass: 'modal-sm' }).result.then(
+      (_) => {
+        console.log("modal close succesfully (only when confirming)");
+        this.deleteEvent();
+      },
+      (_) => {
+        console.log("modal dismissed");
+      }
+    )
   }
 
   get isSetButtonActive(): boolean {
@@ -145,15 +162,15 @@ export class EventConfigTableComponent implements OnChanges {
       for (let i = 0; i < this.items.controls.length; i++) {
         let fg = this.items.controls[i] as UntypedFormGroup;
         items.push({
-          name: fg.controls.name.value,
-          price: fg.controls.price.value,
-          counterInternal: fg.controls.counterInternal.value,
-          counterExternal: fg.controls.counterExternal.value
+          name: fg.controls['name'].value,
+          price: fg.controls['price'].value,
+          counterInternal: fg.controls['counterInternal'].value,
+          counterExternal: fg.controls['counterExternal'].value
         })
       }
 
       let event: EventStandalone = {
-        eventName: this.eventForm.controls.title.value,
+        eventName: this.eventForm.controls['title'].value,
         items: items
       }
 

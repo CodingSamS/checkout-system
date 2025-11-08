@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseAccessService } from "../database-access.service";
+import { warn, debug, trace, info, error } from '@tauri-apps/plugin-log';
 
 @Component({
-  selector: 'app-event-management-site',
-  templateUrl: './event-management-site.component.html',
-  styleUrls: ['./event-management-site.component.scss']
+    selector: 'app-event-management-site',
+    templateUrl: './event-management-site.component.html',
+    styleUrls: ['./event-management-site.component.scss'],
+    standalone: false
 })
 export class EventManagementSiteComponent implements OnInit {
 
@@ -39,6 +41,7 @@ export class EventManagementSiteComponent implements OnInit {
 
   selectionChanged(data: any): void {
     this.selectedEvent = data.value.description;
+    info(JSON.stringify(this.selectedEvent));
   }
 
   addNewEvent(data: any): void {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideAppInitializer, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -15,6 +15,8 @@ import { ToastComponent } from './toasts/toast/toast.component'
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { DatabaseAccessService } from './database-access.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,13 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     ScrollingModule,
     DragDropModule
   ],
-  providers: [],
+  providers: [
+    provideAppInitializer(() => {
+      const databaseAccess = inject(DatabaseAccessService);
+      return databaseAccess.initialize();
+    }),
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
